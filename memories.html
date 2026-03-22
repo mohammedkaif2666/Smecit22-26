@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memories | Class of 2022-26</title>
+    <link rel="icon" type="image/png" href="assets/logo.jpeg">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMEC IT">
+    <link rel="apple-touch-icon" href="assets/logo.jpeg">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0f172a', /* Dark Blue */
+                        'gold': '#d4af37',
+                        'gold-light': '#f3e5ab',
+                        'maroon': '#800000',
+                        'surface': '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -5px rgba(0,0,0,0.1)',
+                        'gold-glow': '0 0 25px rgba(212, 175, 55, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body {
+            /* Fallback background if video fails */
+            background-color: #fafafa;
+            color: #1e293b;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+
+        /* Essential Video Styles */
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        /* Light Theme Overlay for Video */
+        #video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(250, 250, 250, 0.7);
+            /* Reduced Opacity for better visibility */
+            backdrop-filter: blur(2px);
+            /* Reduced blur */
+            z-index: -1;
+        }
+
+        /* Navbar Glass */
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Bottom Nav Safe Area */
+        @media (max-width: 767px) {
+            body {
+                padding-bottom: 5rem;
+            }
+        }
+
+        /* Hide Top Menu in Standalone (App) Mode */
+        @media (display-mode: standalone) {
+            #mobile-menu-btn {
+                display: none !important;
+            }
+        }
+
+        /* Bottom Nav App-Only Restriction */
+        #bottom-nav {
+            display: none !important;
+        }
+
+        @media screen and (max-width: 767px) {
+            @media (display-mode: standalone) {
+                #bottom-nav {
+                    display: block !important;
+                }
+
+                #mobile-menu-btn {
+                    display: none !important;
+                }
+            }
+        }
+
+        /* Masonry Grid Logic */
+        .masonry-grid {
+            column-count: 2;
+            /* Default 2 columns (Mobile) */
+            column-gap: 1rem;
+            /* Tight gap for mobile */
+        }
+
+        @media (min-width: 640px) {
+            .masonry-grid {
+                column-count: 2;
+                column-gap: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Card Decoration */
+        .card-shadow {
+            background: white;
+            padding: 0.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            border: 1px solid transparent;
+        }
+
+        .card-shadow:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #d4af37;
+        }
+
+        /* Filter Buttons */
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background-color: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+
+        .filter-btn:not(.active):hover {
+            background-color: #d4af37;
+            color: white;
+            border-color: #d4af37;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        /* Navbar fix */
+        .pt-safe {
+            padding-top: 6rem;
+        }
+    </style>
+    <script src="js/greetings.js" defer></script>
+</head>
+
+<body class="antialiased selection:bg-gold selection:text-white pt-24">
+
+    <!-- Passcode Overlay -->
+    <div id="passcode-overlay" class="fixed inset-0 z-[200] bg-primary flex flex-col items-center justify-center transition-opacity duration-500 backdrop-blur-md">
+        <div class="bg-white/10 p-8 md:p-12 rounded-2xl shadow-2xl backdrop-blur-lg border border-gold/30 text-center max-w-md w-full mx-4" data-aos="zoom-in">
+            <img src="assets/logo.jpeg" class="h-20 w-20 mx-auto rounded-full border-2 border-gold mb-6 shadow-gold-glow" alt="SMEC IT Logo">
+            <h2 class="text-3xl font-serif text-white font-bold mb-2 tracking-wide">The Vault</h2>
+            <p class="text-gold-light text-sm tracking-widest uppercase mb-8">Enter Passcode to Access</p>
+            
+            <form id="passcode-form" class="space-y-6">
+                <div class="relative">
+                    <input type="password" id="passcode-input" class="w-full bg-slate-800/50 text-white border border-slate-600 rounded-lg py-3 px-4 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors text-center text-xl tracking-[0.3em] font-mono" placeholder="••••••••" required>
+                    <p id="passcode-error" class="hidden absolute -bottom-6 left-0 w-full text-red-500 text-xs font-semibold tracking-wider bg-white/10 py-1 rounded-full backdrop-blur-sm">Incorrect passcode</p>
+                </div>
+                <button type="submit" class="w-full bg-gold hover:bg-gold-light text-slate-900 font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-gold-glow transition-all active:scale-95 uppercase tracking-widest text-sm">Unlock</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Passcode Check Script -->
+    <script>
+        // Check session storage immediately to avoid flash of content
+        if (sessionStorage.getItem('memories_auth') === 'true') {
+            const overlay = document.getElementById('passcode-overlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+                document.body.style.overflow = ''; // Ensure body can scroll
+            }
+        } else {
+            // Lock body scroll if overlay is active
+            document.body.style.overflow = 'hidden';
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                const form = document.getElementById('passcode-form');
+                const input = document.getElementById('passcode-input');
+                const errorMsg = document.getElementById('passcode-error');
+                const overlay = document.getElementById('passcode-overlay');
+
+                if (form) {
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        const code = input.value.trim();
+                        
+                        // Check for both allowed passcodes
+                        if (code === 'smecit22' || code === 'Smecit22') {
+                            sessionStorage.setItem('memories_auth', 'true');
+                            errorMsg.classList.add('hidden');
+                            input.classList.remove('border-red-500', 'ring-red-500');
+                            
+                            // Visual success state before fading out
+                            input.classList.add('border-green-500', 'text-green-500');
+                            
+                            // Fade out overlay
+                            overlay.classList.remove('opacity-100');
+                            overlay.classList.add('opacity-0');
+                            
+                            setTimeout(() => {
+                                overlay.style.display = 'none';
+                                document.body.style.overflow = ''; // Release scroll
+                            }, 500);
+                        } else {
+                            // Error state
+                            errorMsg.classList.remove('hidden');
+                            input.classList.remove('border-slate-600');
+                            input.classList.add('border-red-500', 'ring-1', 'ring-red-500');
+                            
+                            // Simple visual shake using Tailwind transformations (simulated by timeout reset)
+                            input.style.transform = 'translateX(-5px)';
+                            setTimeout(() => input.style.transform = 'translateX(5px)', 100);
+                            setTimeout(() => input.style.transform = 'translateX(-5px)', 200);
+                            setTimeout(() => input.style.transform = 'translateX(0)', 300);
+                            
+                            input.value = '';
+                            input.focus();
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+
+    <!-- Background Video & Overlay -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="assets/St Martins Engineering College Video - 2022-26.mp4" type="video/mp4">
+    </video>
+    <div id="video-overlay"></div>
+
+    <!-- Navigation (Light Theme / Glass) -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-4 group">
+                <div class="relative">
+                    <img src="assets/logo.jpeg"
+                        class="relative h-12 w-12 rounded-full border-2 border-gold shadow-md p-0.5 bg-white">
+                </div>
+                <div class="flex flex-col">
+                    <span
+                        class="text-2xl font-serif font-bold text-slate-900 tracking-wide group-hover:text-gold transition-colors">SMEC</span>
+                    <span class="text-[10px] uppercase text-gold font-bold tracking-[0.2em]">IT Dept '22-26</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-2 font-serif text-sm tracking-wide">
+                <a href="index.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">HOME</a>
+                <a href="about.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">ABOUT</a>
+                <a href="directory.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">STUDENTS</a>
+                <a href="faculty.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">FACULTY</a>
+                <a href="memories.html"
+                    class="px-5 py-2 text-white bg-slate-900 rounded-full shadow-lg border border-gold font-bold">MEMORIES</a>
+                <a href="community.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">COMMUNITY</a>
+                <a href="admin.html"
+                    class="ml-6 px-8 py-2.5 text-white bg-gradient-to-r from-maroon to-red-900 rounded-full shadow-lg hover:shadow-red-900/40 hover:scale-105 transition-all font-bold">UPDATE</a>
+            </div>
+
+            <!-- Mobile Menu Btn -->
+            <button id="mobile-menu-btn"
+                class="md:hidden p-2 text-slate-800 hover:text-gold bg-slate-100/50 rounded-lg backdrop-blur-sm border border-slate-200/50 shadow-sm transition-all hover:bg-slate-200/50">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 z-[100] bg-white/98 backdrop-blur-xl hidden flex-col items-center justify-center space-y-8 opacity-0 transition-opacity duration-300">
+        <button id="close-menu-btn" class="absolute top-8 right-8 p-4 text-slate-400 hover:text-slate-800">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <a href="index.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Home</a>
+        <a href="about.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">About</a>
+        <a href="directory.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Students</a>
+        <a href="faculty.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Faculty</a>
+        <a href="memories.html" class="text-4xl font-serif font-bold text-gold border-b-2 border-gold pb-2">Memories</a>
+        <a href="community.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Community</a>
+        <a href="admin.html"
+            class="mt-4 px-10 py-4 text-xl font-bold text-white bg-maroon rounded-full shadow-xl">Update Profile</a>
+    </div>
+
+    <!-- Hero / Header -->
+    <div class="max-w-7xl mx-auto px-6 mb-8 text-center relative z-10" data-aos="fade-down">
+        <h1 class="text-5xl md:text-8xl font-serif font-bold mb-4 text-slate-900 tracking-tight leading-none">
+            The <span class="text-gold italic">Vault.</span>
+        </h1>
+        <p
+            class="text-slate-500 tracking-widest uppercase text-xs md:text-sm font-semibold border-y border-gold/30 py-3 inline-block px-8">
+            Every laugh. Every tear. Every moment.
+        </p>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="flex justify-center gap-4 mb-16 relative z-10" data-aos="fade-up" data-aos-delay="100">
+        <button
+            class="filter-btn active bg-slate-900 text-white px-8 py-3 rounded-full text-sm font-bold shadow-md hover:scale-105 border border-transparent"
+            data-filter="all">All</button>
+        <button
+            class="filter-btn bg-white text-slate-600 px-8 py-3 rounded-full text-sm font-bold shadow-sm border border-slate-200 hover:scale-105"
+            data-filter="image">Photos</button>
+        <button
+            class="filter-btn bg-white text-slate-600 px-8 py-3 rounded-full text-sm font-bold shadow-sm border border-slate-200 hover:scale-105"
+            data-filter="video">Videos</button>
+    </div>
+
+    <!-- Gallery Grid -->
+    <main class="max-w-7xl mx-auto px-6 pb-20 relative z-10">
+        <div id="gallery-container" class="masonry-grid min-h-[50vh]">
+            <!-- JS will populate this -->
+            <div class="col-span-full text-center py-20 text-slate-400 animate-pulse">Loading memories...</div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12 text-center text-sm border-t border-slate-900 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <p>Developed with ❤️ by <a href="https://www.linkedin.com/in/mohammedkaif6/" target="_blank"
+                    class="text-gold font-bold hover:underline">Mohammed Kaif</a></p>
+            <p class="mt-2 text-xs opacity-60">St. Martin's Engineering College | Department of IT | Class of 2022-26
+            </p>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox"
+        class="lightbox fixed inset-0 z-[60] bg-black/95 flex items-center justify-center backdrop-blur-sm">
+
+        <button id="lightbox-close"
+            class="absolute top-4 right-4 z-50 p-4 text-slate-400 hover:text-white transition-colors bg-white/10 rounded-full hover:bg-red-500/80">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <button id="prev-btn"
+            class="absolute left-2 md:left-8 z-50 p-4 text-white/50 hover:text-white hover:scale-110 transition-all bg-white/5 rounded-full hover:bg-gold">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+
+        <button id="next-btn"
+            class="absolute right-2 md:right-8 z-50 p-4 text-white/50 hover:text-white hover:scale-110 transition-all bg-white/5 rounded-full hover:bg-gold">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+
+        <div class="max-w-6xl w-full max-h-screen p-4 flex flex-col items-center justify-center">
+            <div id="lightbox-media-container" class="relative w-full flex justify-center items-center h-[80vh]">
+            </div>
+            <div id="lightbox-caption" class="text-white text-xl font-serif mt-6 text-center tracking-wide font-bold">
+            </div>
+            <div id="lightbox-uploader"
+                class="text-gold text-xs uppercase tracking-[0.2em] mt-2 border border-gold/30 px-3 py-1 rounded-full">
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+    <!-- Memories JS -->
+    <script type="module" src="js/memories.js"></script>
+
+    <script>
+        // Init Animations
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+
+        // Mobile Menu Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            function openMenu() {
+                if (!mobileMenu) return;
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => { mobileMenu.classList.remove('opacity-0'); mobileMenu.classList.add('opacity-100'); }, 10);
+            }
+
+            function closeMenu() {
+                if (!mobileMenu) return;
+                mobileMenu.classList.remove('opacity-100');
+                mobileMenu.classList.add('opacity-0');
+                setTimeout(() => { mobileMenu.classList.add('hidden'); mobileMenu.classList.remove('flex'); document.body.style.overflow = ''; }, 300);
+            }
+
+            if (menuBtn) menuBtn.addEventListener('click', openMenu);
+            if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+        });
+
+        // Toggle Filter Buttons
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active', 'bg-slate-900', 'text-white'));
+                filterBtns.forEach(b => b.classList.add('bg-white', 'text-slate-600', 'border-slate-200')); // Reset all to inactive style
+
+                btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
+                btn.classList.add('active', 'bg-slate-900', 'text-white'); // Set active
+            });
+        });
+
+        // --- PWA SERVICE WORKER REGISTRATION ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW Registered!', reg))
+                    .catch(err => console.log('SW Registration Failed!', err));
+            });
+        }
+    </script>
+
+    <!-- Mobile Bottom Navigation (Instagram Style) -->
+    <div id="bottom-nav"
+        class="fixed bottom-0 left-0 w-full bg-white/80 backdrop-blur-lg border-t border-slate-200 z-[100] md:hidden px-6 pb-2 shadow-[0_-4px_12px_-2px_rgba(0,0,0,0.05)]">
+        <div class="flex items-center justify-between h-16">
+            <a href="index.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Home</span>
+            </a>
+            <a href="directory.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Students</span>
+            </a>
+            <a href="community.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Chat</span>
+            </a>
+            <a href="faculty.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Faculty</span>
+            </a>
+            <a href="memories.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-gold transition-all duration-300" fill="none" stroke="currentColor"
+                    stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-[10px] font-bold uppercase tracking-tighter text-gold">Memories</span>
+            </a>
+            <a href="about.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">About</span>
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>

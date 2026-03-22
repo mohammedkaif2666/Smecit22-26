@@ -1,0 +1,23 @@
+{
+    "name": "SMEC IT Dept '22-26",
+    "short_name": "SMEC IT",
+    "description": "Digital Sanctuary for Class of 2022-26 | St. Martin's Engineering College",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#0f172a",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "assets/memories/pic37.jpeg",
+            "sizes": "192x192",
+            "type": "image/jpeg",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/memories/pic37.jpeg",
+            "sizes": "512x512",
+            "type": "image/jpeg"
+        }
+    ]
+}

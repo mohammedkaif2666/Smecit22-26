@@ -1,0 +1,551 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile | Class of 2022-26</title>
+    <link rel="icon" type="image/png" href="assets/logo.jpeg">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMEC IT">
+    <link rel="apple-touch-icon" href="assets/logo.jpeg">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0f172a', /* Dark Blue */
+                        'gold': '#d4af37',
+                        'gold-light': '#f3e5ab',
+                        'maroon': '#800000',
+                        'surface': '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -5px rgba(0,0,0,0.1)',
+                        'gold-glow': '0 0 25px rgba(212, 175, 55, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.90);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .text-vertical {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        /* Bottom Nav Safe Area */
+        @media (max-width: 767px) {
+            body {
+                padding-bottom: 5rem;
+            }
+        }
+
+        /* Bottom Nav App-Only Restriction */
+        #bottom-nav {
+            display: none !important;
+        }
+
+        @media screen and (max-width: 767px) {
+            @media (display-mode: standalone) {
+                #bottom-nav {
+                    display: block !important;
+                }
+
+                #mobile-menu-btn {
+                    display: none !important;
+                }
+            }
+        }
+    </style>
+    <script src="js/greetings.js" defer></script>
+</head>
+
+<body class="antialiased selection:bg-gold selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass transition-all duration-300" id="navbar">
+        <div class="max-w-[1400px] mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="h-10 w-1 bg-gold rounded-full group-hover:h-8 transition-all duration-300"></div>
+                <span class="text-xl font-serif font-bold text-slate-900 tracking-wide uppercase">Class of '26</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8 font-serif text-xs font-bold tracking-[0.2em] uppercase">
+                <a href="directory.html"
+                    class="text-slate-500 hover:text-gold transition-colors flex items-center gap-2 group">
+                    <span class="group-hover:-translate-x-1 transition-transform">â†</span> Back to Directory
+                </a>
+            </div>
+
+            <!-- Mobile Menu Btn -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-800 hover:text-gold">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 z-[100] bg-white hidden flex-col items-center justify-center space-y-6 opacity-0 transition-opacity duration-300">
+        <button id="close-menu-btn" class="absolute top-8 right-8 p-4 text-slate-400 hover:text-slate-800">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <a href="index.html"
+            class="text-3xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Home</a>
+        <a href="directory.html"
+            class="text-3xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Directory</a>
+        <a href="directory.html"
+            class="px-6 py-2 rounded-full border border-slate-200 text-slate-500 font-serif text-sm uppercase tracking-widest hover:bg-slate-50 transition-colors mt-4">â†
+            Back to Directory</a>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loading-state"
+        class="fixed inset-0 flex flex-col items-center justify-center bg-white z-40 transition-opacity duration-500">
+        <div class="w-20 h-20 border-4 border-slate-100 border-t-gold rounded-full animate-spin mb-6"></div>
+        <p class="text-slate-400 font-serif tracking-widest text-sm uppercase animate-pulse">Curating Profile...</p>
+    </div>
+
+    <!-- Main Content: Sticky Layout -->
+    <main id="profile-content"
+        class="min-h-screen relative hidden opacity-0 transition-opacity duration-1000 overflow-x-hidden">
+
+        <div class="max-w-[1400px] mx-auto md:flex">
+
+            <!-- LEFT COLUMN: Sticky Identity (40%) -->
+            <div
+                class="md:w-[40%] md:h-screen md:sticky md:top-0 bg-white md:border-r border-slate-100 relative z-10 flex flex-col shadow-xl md:shadow-none">
+
+                <!-- Photo Container -->
+                <div
+                    class="h-[50vh] md:h-auto md:max-h-[70vh] relative overflow-hidden group bg-slate-50 flex items-center justify-center">
+                    <img id="vp-photo" src="" alt="Profile"
+                        class="w-full h-full object-contain p-4 md:p-8 transition-transform duration-[1.5s] group-hover:scale-105">
+                </div>
+
+                <!-- Info Container -->
+                <div class="flex-1 p-8 md:p-10 flex flex-col justify-center bg-white relative">
+                    <!-- Decorative BG Number -->
+                    <span
+                        class="absolute top-4 right-6 text-9xl font-serif font-bold text-slate-50 opacity-[0.03] select-none"
+                        id="bg-year">26</span>
+
+                    <div class="mb-4 flex items-center gap-3">
+                        <span id="vp-role"
+                            class="px-3 py-1 bg-slate-900 text-white text-[10px] font-bold uppercase tracking-widest rounded-sm">Student</span>
+                        <span id="vp-roll" class="text-slate-400 text-xs font-mono font-medium tracking-wide"></span>
+                    </div>
+
+                    <h1 id="vp-name"
+                        class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-slate-900 leading-[1.1] mb-6">
+                    </h1>
+
+                    <div class="w-12 h-1 bg-gold mb-6"></div>
+
+                    <!-- Quote -->
+                    <div class="relative flex-1 overflow-y-auto custom-scrollbar pr-2 max-h-[150px]">
+                        <span class="text-4xl text-gold/30 font-serif absolute -top-4 -left-2">“</span>
+                        <p id="vp-quote" class="text-lg text-slate-500 font-serif italic leading-relaxed pl-4"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Scrolling Story (60%) -->
+            <div class="md:w-[60%] bg-[#fafafa]">
+
+                <!-- Spacer for Header -->
+                <div class="h-20 hidden md:block"></div>
+
+                <div class="max-w-3xl mx-auto px-6 py-12 md:py-24">
+
+                    <!-- Intro Marker -->
+                    <div class="flex items-center gap-4 mb-20 opacity-50">
+                        <span class="text-xs uppercase tracking-[0.3em] font-bold text-slate-400">The Journey</span>
+                        <div class="h-px bg-slate-300 flex-1"></div>
+                    </div>
+
+                    <!-- Dynamic Sections -->
+                    <div id="vp-sections" class="space-y-32">
+                        <!-- Content Injected Here -->
+                    </div>
+
+                    <!-- Footer Area -->
+                    <div class="mt-32 pt-12 border-t border-slate-200 text-center">
+                        <img src="assets/college.png"
+                            class="h-16 mx-auto mb-6 opacity-30 grayscale hover:grayscale-0 transition-all duration-500">
+                        <p class="text-slate-400 font-serif italic text-sm">Valid Class of 2026 Student Profile</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 50, duration: 1000, easing: 'ease-out-cubic' });
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn?.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
+        });
+
+        closeBtn?.addEventListener('click', () => {
+            mobileMenu.classList.add('opacity-0');
+            setTimeout(() => { mobileMenu.classList.add('hidden'); mobileMenu.classList.remove('flex'); document.body.style.overflow = ''; }, 300);
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC96wxUwUEbvx0hMgqeQCVaBlqY0JYvn5g",
+            authDomain: "classof2025-4dcad.firebaseapp.com",
+            projectId: "classof2025-4dcad",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Predefined Photos (Lookup Table)
+        const predefinedPhotos = {
+            "amanchijeevitha@gmail.com": "assets/profile pics/C9-1.jpeg",
+            "linscore777@gmail.com": "assets/profile pics/d0-1.jpeg",
+            "adepudivya27@gmail.com": "assets/profile pics/D1-1.jpeg",
+            "akitivarunreddy441@gmail.com": "assets/profile pics/D2-1.jpeg",
+            "alisamir8686@gmail.com": "assets/profile pics/D3-1.jpeg",
+            "bhukyapraveen044@gmail.com": "assets/profile pics/D4.jpeg",
+            "bijjarapushivapranav4760@gmail.com": "assets/profile pics/D5-1.jpeg",
+            "charanpaul156@gmail.com": "assets/profile pics/D6-1.jpeg",
+            "harshavardhanchekuri6333@gmail.com": "assets/profile pics/D7.jpeg",
+            "Varshita195@gmail.com": "assets/profile pics/D8-1.jpeg",
+            "ajay.devanaboyina26@gmail.com": "assets/profile pics/D9-1.jpeg",
+            "anushaedula01@gmail.com": "assets/profile pics/E0-1.jpeg",
+            "anushagaddam381@gmail.com": "assets/profile pics/E1-1.jpeg",
+            "rockygaddam0@gmail.com": "assets/profile pics/E2.jpeg",
+            "snehithagollagadda@gmail.com": "assets/profile pics/E3-1.jpeg",
+            "Chandu.gundavarapu@gmail.com": "assets/profile pics/E4-1.jpeg",
+            "juniaspaul222@gmail.com": "assets/profile pics/E5-1.jpeg",
+            "janampallysunilkumar@gmail.com": "assets/profile pics/E6-1.jpeg",
+            "ankithajadhav2107@gmail.com": "assets/profile pics/E7-1.jpeg",
+            "tanushk48@gmail.com": "assets/profile pics/E8-1.jpeg",
+            "saimanikallepaly11@gmail.com": "assets/profile pics/E9-1&2.jpeg",
+            "abhinavkaparaboina@gmail.com": "assets/profile pics/F0-1.jpeg",
+            "ramcharanreddykoli@gmail.com": "assets/profile pics/F1-1.jpeg",
+            "aswithakota@gmail.com": "assets/profile pics/F2-1.jpg",
+            "jathinkothapally@gmail.com": "assets/profile pics/F3-1.jpeg",
+            "gouthamreddy7272@gmail.com": "assets/profile pics/F4-1&2.jpeg",
+            "yogendergoudm@gmail.com": "assets/profile pics/F5-1.jpeg",
+            "suryatejreddymamidi@gmail.com": "assets/profile pics/F6-1.jpeg",
+            "tarunrushikeshmanne@gmail.com": "assets/profile pics/F7.jpeg",
+            "vasuyadavmanuka@gmail.com": "assets/profile pics/F8-1.jpeg",
+            "mahathimaya54@gmail.com": "assets/profile pics/F9-1.jpeg",
+            "rishithamekala27@gmail.com": "assets/profile pics/G0-1.jpeg",
+            "wasay5127796@gmail.com": "assets/profile pics/G1-1.jpeg",
+            "mohammedkaif2666@gmail.com": "assets/profile pics/G2-1.jpg",
+            "mohammadyousuf31672@gmail.com": "assets/profile pics/G3-1.jpeg",
+            "asifmohd8260@gmail.com": "assets/profile pics/G4-1.jpeg",
+            "jayasreemotati3@gmail.com": "assets/profile pics/G5-1.jpeg",
+            "divyamuthyala1512@gmail.com": "assets/profile pics/G6-1.jpeg",
+            "anunayrdy002@gmail.com": "assets/profile pics/G7-1&2.jpeg",
+            "harinireddy3719@gmail.com": "assets/profile pics/G9-1.jpeg",
+            "pannelasucharitha@gmail.com": "assets/profile pics/H0-1&2.jpeg",
+            "vaishnaviparshi01@gmail.com": "assets/profile pics/H1-1.jpeg",
+            "parthachaudhury15@gmail.com": "assets/profile pics/H2-1.jpeg",
+            "parthiv08goud@gmail.com": "assets/profile pics/H3-1.jpeg",
+            "rangaabhignagoud06@gmail.com": "assets/profile pics/H4-1.jpeg",
+            "arvindgoudrangu@gmail.com": "assets/profile pics/H5-1&2.jpeg",
+            "rikkalanikhithareddyrikkala@gmail.com": "assets/profile pics/H6-1.jpeg",
+            "pranavisambari@gmail.com": "assets/profile pics/H7-1.jpeg",
+            "asrath.smd@gmail.com": "assets/profile pics/Asrath.jpg",
+            "sidha78@gmail.com": "assets/profile pics/H9-1.jpeg",
+            "sumayyatarannum810@gmail.com": "assets/profile pics/J0.jpeg",
+            "sunkojusathwin06@gmail.com": "assets/profile pics/J1-1.jpeg",
+            "tanoorkiran@gmail.com": "assets/profile pics/J2-1.jpeg",
+            "tippareddyshyam@gmail.com": "assets/profile pics/J4-1&2.jpeg",
+            "uthamprasanna@gmail.com": "assets/profile pics/J5-1.jpeg",
+            "vagvalaeshwararya@gmail.com": "assets/profile pics/J6.jpeg",
+            "shruthivittoli@gmail.com": "assets/profile pics/J7-1.jpeg",
+            "manishvuppala070@gmail.com": "assets/profile pics/j8-1.jpeg",
+            "bhavaneeth60@gmail.com": "assets/profile pics/J9-1.jpeg",
+            "saideepyellanki9@gmail.com": "assets/profile pics/K0-1.jpeg",
+            "yenugusanjana@gmail.com": "assets/profile pics/K1-1.jpeg",
+            "sahithimendu09@gmail.com": "assets/profile pics/K2-1.jpeg",
+            "sathwikshivannagari@gmail.com": "",
+            "nenavathvenkat54@gmail.com": "",
+            "ranjithemmadi9@gmail.com": "assets/profile pics/LE15-1.jpeg",
+            "mangalishirisha10@gmail.com": "assets/profile pics/LE16-1.jpeg",
+            "suchithrameesa@gmail.com": "assets/profile pics/LE17-1.jpeg",
+            "poojameasa@gmail.com": "assets/profile pics/LE18-1.jpg",
+            "anjikumar1219@gmail.com": "assets/profile pics/LE19.jpeg"
+        };
+
+        const localData = [
+            { email: "mohammedkaif2666@gmail.com", name: "Mohammed Kaif", roll: "22K81A12G2" },
+        ];
+        const normalizedPredefinedPhotos = Object.fromEntries(
+            Object.entries(predefinedPhotos).map(([email, photo]) => [email.toLowerCase(), photo])
+        );
+
+        function escapeHTML(value = "") {
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/\"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function sanitizeImageSource(value, seed = "User") {
+            if (typeof value === "string") {
+                const src = value.trim();
+                if (/^(data:image\/|https?:\/\/|assets\/)/i.test(src)) {
+                    return src;
+                }
+            }
+            return `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(seed)}`;
+        }
+
+        async function loadProfile() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const rawTargetEmail = (urlParams.get("email") || "").trim();
+            const targetEmail = rawTargetEmail.toLowerCase();
+
+            if (!targetEmail) {
+                alert("No profile email specified!");
+                window.location.href = "directory.html";
+                return;
+            }
+
+            try {
+                // Firebase Query
+                let q = query(collection(db, "students"), where("email", "==", rawTargetEmail));
+                let querySnapshot = await getDocs(q);
+                if (querySnapshot.empty && rawTargetEmail !== targetEmail) {
+                    q = query(collection(db, "students"), where("email", "==", targetEmail));
+                    querySnapshot = await getDocs(q);
+                }
+                let data = {};
+
+                if (!querySnapshot.empty) {
+                    data = querySnapshot.docs[0].data();
+                } else {
+                    const local = localData.find((student) => student.email.toLowerCase() === targetEmail);
+                    if (local) data = { name: local.name, rollNumber: local.roll };
+                }
+
+                const displayName = data.name || "Unknown";
+                const imgPath = sanitizeImageSource(data.photoURL || normalizedPredefinedPhotos[targetEmail], displayName);
+
+                // Inject Data
+                document.getElementById("vp-name").textContent = displayName;
+                const vpPhoto = document.getElementById("vp-photo");
+                vpPhoto.src = imgPath;
+                vpPhoto.onerror = () => {
+                    vpPhoto.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(displayName)}`;
+                };
+                document.getElementById("vp-role").textContent = data.role || "Student";
+                document.getElementById("vp-roll").textContent = data.rollNumber || "IT Department";
+                document.getElementById("vp-quote").textContent = data.quote || "Writing my story...";
+
+                // Render Dynamic Sections (Editorial Style)
+                const sectionContainer = document.getElementById("vp-sections");
+                sectionContainer.innerHTML = "";
+
+                if (Array.isArray(data.customSections) && data.customSections.length > 0) {
+                    data.customSections.forEach((sec) => {
+                        const safeTitle = escapeHTML(sec?.title || "Untitled Section");
+                        const safeContent = escapeHTML(sec?.content || "").replace(/\n/g, "<br>");
+                        const hasImage = typeof sec?.image === "string" && sec.image.trim() !== "";
+                        const safeImage = hasImage ? sanitizeImageSource(sec.image, sec.title || displayName) : "";
+
+                        const html = `
+                            <div class="group" data-aos="fade-up" data-aos-duration="1000">
+                                <h2 class="text-3xl font-serif font-bold text-slate-900 mb-6 group-hover:text-gold transition-colors duration-300 flex items-center gap-4">
+                                    ${safeTitle}
+                                    <span class="h-px bg-slate-200 flex-1 group-hover:bg-gold/30 transition-colors"></span>
+                                </h2>
+
+                                <div class="text-lg text-slate-600 leading-[1.8] font-serif mb-8">
+                                    ${safeContent}
+                                </div>
+
+                                ${hasImage ? `
+                                <div class="relative overflow-hidden rounded-sm" data-aos="zoom-in" data-aos-delay="200">
+                                    <img src="${safeImage}" class="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                                    <div class="absolute inset-0 border border-black/5 pointer-events-none"></div>
+                                </div>` : ""}
+                            </div>
+                        `;
+                        sectionContainer.insertAdjacentHTML("beforeend", html);
+                    });
+                } else {
+                    sectionContainer.innerHTML = `
+                         <div class="h-64 flex flex-col items-center justify-center border border-dashed border-slate-300 p-12 text-center" data-aos="fade-up">
+                            <p class="font-serif text-2xl text-slate-400 italic mb-2">"The best chapters are yet to be written."</p>
+                            <span class="text-xs uppercase tracking-widest text-slate-300">No content added yet</span>
+                        </div>
+                    `;
+                }
+
+                // Reveal UI
+                const loader = document.getElementById("loading-state");
+                const content = document.getElementById("profile-content");
+
+                loader.classList.add("opacity-0");
+                setTimeout(() => {
+                    loader.classList.add("hidden");
+                    content.classList.remove("hidden");
+                    setTimeout(() => content.classList.remove("opacity-0"), 50);
+                }, 500);
+
+                setTimeout(() => {
+                    if (window.AOS) window.AOS.refresh();
+                }, 600);
+
+            } catch (error) {
+                console.error(error);
+                alert("Error loading profile.");
+            }
+        }
+
+        loadProfile();
+
+        // --- PWA SERVICE WORKER REGISTRATION ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW Registered!', reg))
+                    .catch(err => console.log('SW Registration Failed!', err));
+            });
+        }
+    </script>
+
+    <!-- Mobile Bottom Navigation (Instagram Style) -->
+    <div id="bottom-nav"
+        class="fixed bottom-0 left-0 w-full bg-white/80 backdrop-blur-lg border-t border-slate-200 z-[100] md:hidden px-6 pb-2 shadow-[0_-4px_12px_-2px_rgba(0,0,0,0.05)]">
+        <div class="flex items-center justify-between h-16">
+            <a href="index.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Home</span>
+            </a>
+            <a href="directory.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-gold transition-all duration-300" fill="none" stroke="currentColor"
+                    stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span class="text-[10px] font-bold uppercase tracking-tighter text-gold">Students</span>
+            </a>
+            <a href="faculty.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Faculty</span>
+            </a>
+            <a href="memories.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Memories</span>
+            </a>
+            <a href="about.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">About</span>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+

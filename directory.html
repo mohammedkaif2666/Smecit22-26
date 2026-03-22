@@ -1,0 +1,2702 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Directory | Hall of Fame</title>
+
+    <link rel="icon" type="image/png" href="assets/logo.jpeg">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Anton&family=Lora:ital,wght@0,400;1,400&family=Merriweather:ital,wght@0,300;0,700;1,300&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Oswald:wght@200..700&family=Quicksand:wght@300..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMEC IT">
+    <link rel="apple-touch-icon" href="assets/logo.jpeg">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0f172a',
+                        'gold': '#d4af37',
+                        'gold-light': '#f3e5ab',
+                        'maroon': '#800000',
+                        'surface': '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -5px rgba(0,0,0,0.1)',
+                        'gold-glow': '0 0 25px rgba(212, 175, 55, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fafafa;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            border: 1px solid transparent;
+        }
+
+        .card-shadow:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            border-color: #d4af37;
+        }
+
+        /* Modal Transitions */
+        .modal {
+            transition: all 0.3s ease-out;
+            opacity: 0;
+            visibility: hidden;
+            backdrop-filter: blur(0px);
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            transform: scale(0.95);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Stagger Reveal Animation */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal.active .reveal-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 {
+            transition-delay: 100ms;
+        }
+
+        .delay-200 {
+            transition-delay: 200ms;
+        }
+
+        .delay-300 {
+            transition-delay: 300ms;
+        }
+
+        .delay-400 {
+            transition-delay: 400ms;
+        }
+
+        .delay-500 {
+            transition-delay: 500ms;
+        }
+
+        /* IMAGE ASPECT RATIO FIX */
+        .aspect-portrait {
+            aspect-ratio: 3 / 4;
+        }
+
+        .card-img-container img {
+            object-fit: cover;
+            object-position: top center;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Bottom Nav Safe Area */
+        @media (max-width: 767px) {
+            body {
+                padding-bottom: 5rem;
+            }
+        }
+
+        /* Bottom Nav App-Only Restriction */
+        #bottom-nav {
+            display: none !important;
+        }
+
+        @media screen and (max-width: 767px) {
+            @media (display-mode: standalone) {
+                #bottom-nav {
+                    display: block !important;
+                }
+
+                #mobile-menu-btn {
+                    display: none !important;
+                }
+            }
+        }
+    </style>
+    <script src="js/greetings.js" defer></script>
+</head>
+
+<body class="antialiased selection:bg-gold selection:text-white">
+
+    <!-- Background Pattern -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-30 pointer-events-none"
+        style="background-image: radial-gradient(#d4af37 0.5px, transparent 0.5px); background-size: 24px 24px;">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-4 group">
+                <div class="relative">
+                    <img src="assets/logo.jpeg"
+                        class="relative h-12 w-12 rounded-full border-2 border-gold shadow-md p-0.5 bg-white">
+                </div>
+                <div class="flex flex-col">
+                    <span
+                        class="text-2xl font-serif font-bold text-slate-900 tracking-wide group-hover:text-gold transition-colors">SMEC</span>
+                    <span class="text-[10px] uppercase text-gold font-bold tracking-[0.2em]">IT Dept '22-26</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-2 font-serif text-sm tracking-wide">
+                <a href="index.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">HOME</a>
+                <a href="about.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">ABOUT</a>
+                <a href="directory.html"
+                    class="px-5 py-2 text-white bg-slate-900 rounded-full shadow-lg border border-gold font-bold">STUDENTS</a>
+                <a href="faculty.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">FACULTY</a>
+                <a href="memories.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">MEMORIES</a>
+                <a href="community.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">COMMUNITY</a>
+                <a href="admin.html"
+                    class="ml-6 px-8 py-2.5 text-white bg-gradient-to-r from-maroon to-red-900 rounded-full shadow-lg hover:shadow-red-900/40 hover:scale-105 transition-all font-bold">UPDATE</a>
+            </div>
+
+            <!-- Mobile Menu Btn -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-800 hover:text-gold">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 z-[100] bg-white/98 backdrop-blur-xl hidden flex-col items-center justify-center space-y-8 opacity-0 transition-opacity duration-300">
+        <button id="close-menu-btn" class="absolute top-8 right-8 p-4 text-slate-400 hover:text-slate-800">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <a href="index.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Home</a>
+        <a href="about.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">About</a>
+        <a href="directory.html"
+            class="text-4xl font-serif font-bold text-gold border-b-2 border-gold pb-2">Students</a>
+        <a href="faculty.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Faculty</a>
+        <a href="memories.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Memories</a>
+        <a href="community.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Community</a>
+        <a href="admin.html"
+            class="mt-4 px-10 py-4 text-xl font-bold text-white bg-maroon rounded-full shadow-xl">Update Profile</a>
+    </div>
+
+    <!-- Hero -->
+    <header class="relative pt-44 pb-24 px-6 text-center">
+        <div class="relative z-10 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+            <h1 class="text-6xl md:text-8xl font-serif font-bold mb-6 text-slate-900 tracking-tight leading-none">
+                THE HALL OF <span class="text-gold italic">FAME</span>
+            </h1>
+            <p
+                class="text-slate-500 font-serif text-xl md:text-2xl tracking-widest uppercase mb-12 border-y border-gold/30 py-4 inline-block px-12">
+                Class of 2022-26
+            </p>
+
+            <div class="max-w-xl mx-auto relative group">
+                <div
+                    class="absolute -inset-0.5 bg-gradient-to-r from-gold to-maroon rounded-full blur opacity-30 group-focus-within:opacity-60 transition duration-500">
+                </div>
+                <div class="relative">
+                    <input type="text" id="searchInput" onkeyup="filterStudents()"
+                        placeholder="Search Student Name or Roll No..."
+                        class="w-full pl-8 pr-14 py-5 bg-white border border-slate-100 rounded-full text-slate-900 font-serif placeholder-slate-400 focus:outline-none focus:ring-0 transition-all text-xl shadow-xl">
+                    <div class="absolute right-6 top-1/2 -translate-y-1/2 text-gold">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Grid (User Request: "4444" - Max 4 columns) -->
+    <main class="max-w-[1600px] mx-auto px-6 pb-32">
+        <div id="directory-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+
+            <!-- Student Card: A. Jeevitha -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="A. Jeevitha" data-roll="22K81A12C9"
+                data-email="amanchijeevitha@gmail.com" data-phone="+91 8801511046" data-dob="11 Jan 2005"
+                data-gender="Female" data-photo="assets/profile pics/C9-1.jpeg"
+                data-linkedin="http://www.linkedin.com/in/amanchi-jeevitha"
+                data-instagram="https://www.instagram.com/_jeevithaaaa.__" data-aos="fade-up" data-aos-delay="0"
+                data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/C9-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Jeevitha'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">A. Jeevitha</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12C9</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Adarsh Potunuri -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Adarsh Potunuri" data-roll="22K81A12D0"
+                data-email="linscore777@gmail.com" data-phone="+91 9381156872" data-dob="30 Dec 2003" data-gender="Male"
+                data-photo="assets/profile pics/D0-2.jpeg" data-linkedin="#" data-instagram="#" data-aos="fade-up"
+                data-aos-delay="50" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/D0-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Adarsh'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Adarsh Potunuri</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12D0</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Adepu Divya -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Adepu Divya" data-roll="22K81A12D1"
+                data-email="adepudivya27@gmail.com" data-phone="+91 9912355659" data-dob="27 May 2005"
+                data-gender="Female" data-photo="assets/profile pics/D1-1.jpeg"
+                data-linkedin="https://www.linkedin.com/in/divya-adepu-511935312"
+                data-instagram="https://www.instagram.com/adepu_divyaa?igsh=MW9mMnJzbjN5b3Rybg==" data-aos="fade-up"
+                data-aos-delay="100" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/D1-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Divya'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Adepu Divya</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12D1</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Akitivarunreddy -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Akitivarunreddy" data-roll="22K81A12D2"
+                data-email="akitivarunreddy441@gmail.com" data-phone="+91 7672009289" data-dob="04 Aug 2004"
+                data-gender="Male" data-photo="assets/profile pics/D2-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="150" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/D2-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Varun'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Akitivarunreddy</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12D2</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Ali Imam -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Ali Imam" data-roll="22K81A12D3"
+                data-email="alisamir8686@gmail.com" data-phone="+91 8688496354" data-dob="18 Oct 2004"
+                data-gender="Male" data-photo="assets/profile pics/D3-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/D3-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Ali'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Ali Imam</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12D3</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Bhukya Praveen -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Bhukya Praveen" data-roll="22K81A12D4"
+                data-email="bhukyapraveen044@gmail.com" data-phone="+91 9848880457" data-dob="13 Feb 2003"
+                data-gender="Male" data-photo="assets/profile pics/D4.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="250" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/D4-1.jpg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Praveen'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Bhukya Praveen</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12D4</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Bijjarapu ShivaPranav -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Bijjarapu ShivaPranav" data-roll="22K81A12D5"
+                data-email="bijjarapushivapranav4760@gmail.com" data-phone="+91 9581434760" data-dob="12 Jan 2004"
+                data-gender="Male" data-photo="assets/profile pics/D5-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/D5-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Shiva'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Bijjarapu ShivaPranav</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12D5</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Billa Chris Charan Paul -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Billa Chris Charan Paul" data-roll="22K81A12D6"
+                data-email="charanpaul156@gmail.com" data-phone="+91 7330917368" data-dob="26 Dec 2002"
+                data-gender="Male" data-photo="assets/profile pics/D6-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="350" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/D6-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Charan'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Billa Chris Charan Paul</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12D6</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Chekuri Harsha Vardhan -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Chekuri Harsha Vardhan" data-roll="22K81A12D7"
+                data-email="harshavardhanchekuri6333@gmail.com" data-phone="+91 7981579983" data-dob="07 Oct 2004"
+                data-gender="Male" data-photo="assets/profile pics/D7-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="0" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/D7.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Harsha'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Chekuri Harsha Vardhan</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12D7</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Daram Varshita -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Daram Varshita" data-roll="22K81A12D8"
+                data-email="Varshita195@gmail.com" data-phone="+91 9392758192" data-dob="19 Jan 2005"
+                data-gender="Female" data-photo="assets/profile pics/D8-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="50" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/D8.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Varshita'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Daram Varshita</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12D8</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Devanaboyina Ajay -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Devanaboyina Ajay" data-roll="22K81A12D9"
+                data-email="ajay.devanaboyina26@gmail.com" data-phone="+91 8106083315" data-dob="26 Apr 2005"
+                data-gender="Male" data-photo="assets/profile pics/D9-1.jpeg"
+                data-linkedin="https://www.linkedin.com/in/ajay-devanaboyina-324225337"
+                data-instagram="https://www.instagram.com/_.ajay_yadav26?igsh=MTBudGI3dmM2cnA2Yg==" data-aos="fade-up"
+                data-aos-delay="100" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/D9-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Ajay'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Devanaboyina Ajay</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12D9</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Edula Anusha -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Edula Anusha" data-roll="22K81A12E0"
+                data-email="anushaedula01@gmail.com" data-phone="+91 7702655970" data-dob="02 Dec 2004"
+                data-gender="Female" data-photo="assets/profile pics/E0-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="150" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/E0-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Anusha'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Edula Anusha</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12E0</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Gaddam Anusha -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Gaddam Anusha" data-roll="22K81A12E1"
+                data-email="anushagaddam381@gmail.com" data-phone="+91 9381998668" data-dob="04 Feb 2005"
+                data-gender="Female" data-photo="assets/profile pics/E1-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/E1-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Anusha'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Gaddam Anusha</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12E1</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Gaddam Rakesh -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Gaddam Rakesh" data-roll="22K81A12E2"
+                data-email="rockygaddam0@gmail.com" data-phone="+91 9347196792" data-dob="22 Oct 2004"
+                data-gender="Male" data-photo="assets\profile pics\E2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="250" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets\profile pics\E2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Rakesh'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Gaddam Rakesh</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12E2</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Gollagadda Snehitha Goud -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Gollagadda Snehitha Goud" data-roll="22K81A12E3"
+                data-email="snehithagollagadda@gmail.com" data-phone="+91 7396675774" data-dob="02 Dec 2004"
+                data-gender="Female" data-photo="assets/profile pics/E3-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/E3-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Snehitha'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Gollagadda Snehitha Goud</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12E3</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Gundavarapu Ayyanna Chowdary -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Gundavarapu Ayyanna Chowdary" data-roll="22K81A12E4"
+                data-email="Chandu.gundavarapu@gmail.com" data-phone="+91 8247819812" data-dob="14 Sep 2003"
+                data-gender="Male" data-photo="assets/profile pics/E4-1.jpeg"
+                data-linkedin="https://www.linkedin.com/in/chowdary-gundavarapu-474416349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                data-instagram="https://www.instagram.com/chandugundavarapu?igsh=MTJ0cm9rdDZramQ5NA=="
+                data-aos="fade-up" data-aos-delay="350" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/E4-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Ayyanna'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Gundavarapu Ayyanna Chowdary
+                    </h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12E4</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Joseph Junias Paul -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Joseph Junias Paul" data-roll="22K81A12E5"
+                data-email="juniaspaul222@gmail.com" data-phone="+91 6304728611" data-dob="06 Apr 2005"
+                data-gender="Male" data-photo="assets/profile pics/E5-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="0" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/E5-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Joseph'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Joseph Junias Paul</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12E5</p>
+                </div>
+            </div>
+
+            <!-- Student Card: J Sunil Kumar -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="J Sunil Kumar" data-roll="22K81A12E6"
+                data-email="janampallysunilkumar@gmail.com" data-phone="+91 8978447724" data-dob="11 Sep 2004"
+                data-gender="Male" data-photo="assets/profile pics/E6-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="50" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/E6-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Sunil'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">J Sunil Kumar</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12E6</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Jadhav Ankitha -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Jadhav Ankitha" data-roll="22K81A12E7"
+                data-email="ankithajadhav2107@gmail.com" data-phone="+91 7993819029" data-dob="21 Jul 2005"
+                data-gender="Female" data-photo="assets/profile pics/E7-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/E7-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Ankitha'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Jadhav Ankitha</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12E7</p>
+                </div>
+            </div>
+
+            <!-- Student Card: K. Tanush -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="K. Tanush" data-roll="22K81A12E8" data-email="tanushk48@gmail.com"
+                data-phone="+91 7995815760" data-dob="11 Jun 2004" data-gender="Male"
+                data-photo="assets/profile pics/E8-2.jpeg" data-linkedin="#" data-instagram="#" data-aos="fade-up"
+                data-aos-delay="150" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/E8-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Tanush'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">K. Tanush</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12E8</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Saimani Kallepally -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Saimani Kallepally" data-roll="22K81A12E9"
+                data-email="saimanikallepaly11@gmail.com" data-phone="+91 8790566102" data-dob="05 Nov 2004"
+                data-gender="Male" data-photo="assets/profile pics/E9-1&2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/E9-1&2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Saimani'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Saimani Kallepally</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12E9</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Kaparaboina Abhinav -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Kaparaboina Abhinav" data-roll="22K81A12F0"
+                data-email="abhinavkaparaboina@gmail.com" data-phone="+91 8688503079" data-dob="04 Aug 2004"
+                data-gender="Male" data-photo="assets/profile pics/F0-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="250" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/F0-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Abhinav'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Kaparaboina Abhinav</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12F0</p>
+                </div>
+            </div>
+
+            <!-- Student Card: K. Ramcharan Reddy -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="K. Ramcharan Reddy" data-roll="22K81A12F1"
+                data-email="ramcharanreddykoli@gmail.com" data-phone="+91 8179154177" data-dob="07 Jul 2004"
+                data-gender="Male" data-photo="assets/profile pics/F1-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/F1-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Ramcharan'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">K. Ramcharan Reddy</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12F1</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Kota Aswitha -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Kota Aswitha" data-roll="22K81A12F2"
+                data-email="aswithakota@gmail.com" data-phone="+91 7799383154" data-dob="29 Mar 2004"
+                data-gender="Female" data-photo="assets/profile pics/Syco profile pic.jpg" data-linkedin="#"
+                data-instagram="#" data-aos="fade-up" data-aos-delay="350" data-tilt data-tilt-max="3"
+                data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/F2-1.jpg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Aswitha'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Kota Aswitha</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12F2</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Kothapally Jathin -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Kothapally Jathin" data-roll="22K81A12F3"
+                data-email="jathinkothapally@gmail.com" data-phone="+91 7382335444" data-dob="27 May 2005"
+                data-gender="Male" data-photo="assets/profile pics/F3-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="0" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/F3-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Jathin'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Kothapally Jathin</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12F3</p>
+                </div>
+            </div>
+
+            <!-- Student Card: M. Goutham Reddy -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="M. Goutham Reddy" data-roll="22K81A12F4"
+                data-email="gouthamreddy7272@gmail.com" data-phone="+91 9573969563" data-dob="20 Apr 2004"
+                data-gender="Male" data-photo="assets/profile pics/F4-1&2.jpeg"
+                data-linkedin="https://www.linkedin.com/in/goutham7"
+                data-instagram="https://www.instagram.com/gouthamredd1" data-aos="fade-up" data-aos-delay="50" data-tilt
+                data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/F4-1&2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Goutham'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">M. Goutham Reddy</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12F4</p>
+                </div>
+            </div>
+
+            <!-- Student Card: M Yogender Goud -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="M Yogender Goud" data-roll="22K81A12F5"
+                data-email="yogendergoudm@gmail.com" data-phone="+91 8096459163" data-dob="19 Sep 2002"
+                data-gender="Male" data-photo="assets/profile pics/F5-2.jpeg" data-linkedin="#"
+                data-instagram="https://www.instagram.com/yogender_goud_?igsh=NTJzbGRtcjZ2YWJm" data-aos="fade-up"
+                data-aos-delay="100" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/F5-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Yogender'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">M Yogender Goud</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12F5</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Mamidi Suryatej Reddy -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Mamidi Suryatej Reddy" data-roll="22K81A12F6"
+                data-email="suryatejreddymamidi@gmail.com" data-phone="+91 9392277833" data-dob="20 Nov 2004"
+                data-gender="Male" data-photo="assets/profile pics/F6-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="150" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/F6-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Suryatej'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Mamidi Suryatej Reddy</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12F6</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Manne Tarun Rushieksh -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Manne Tarun Rushieksh" data-roll="22K81A12F7"
+                data-email="tarunrushikeshmanne@gmail.com" data-phone="+91 8464062455" data-dob="16 Jun 2004"
+                data-gender="Male" data-photo="assets\profile pics\F7.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets\profile pics\F7.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Tarun'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Manne Tarun Rushieksh</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12F7</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Manuka Vasu Yadav -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Manuka Vasu Yadav" data-roll="22K81A12F8"
+                data-email="vasuyadavmanuka@gmail.com" data-phone="+91 9849385304" data-dob="26 Mar 2004"
+                data-gender="Male" data-photo="assets/profile pics/F8-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="250" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/F8-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Vasu'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Manuka Vasu Yadav</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12F8</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Maya Mahathi -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Maya Mahathi" data-roll="22K81A12F9"
+                data-email="mahathimaya54@gmail.com" data-phone="+91 9392831762" data-dob="10 Jan 2005"
+                data-gender="Female" data-photo="assets/profile pics/F9-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/F9-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Mahathi'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Maya Mahathi</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12F9</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Mekala Rishitha -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Mekala Rishitha" data-roll="22K81A12G0"
+                data-email="rishithamekala27@gmail.com" data-phone="+91 7981082727" data-dob="27 Jul 2004"
+                data-gender="Female" data-photo="assets/profile pics/G0-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="350" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/G0-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Rishitha'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Mekala Rishitha</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12G0</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Mohammad Abdul Wasay -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Mohammad Abdul Wasay" data-roll="22K81A12G1"
+                data-email="wasay5127796@gmail.com" data-phone="+91 9346778405" data-dob="27 Jan 2004"
+                data-gender="Male" data-photo="assets/memories/pic33.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="0" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/G1-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Wasay'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Mohammad Abdul Wasay</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12G1</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Mohammed Kaif -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Mohammed Kaif" data-roll="22K81A12G2"
+                data-email="mohammedkaif2666@gmail.com" data-phone="+91 9676930610" data-dob="31 Dec 2003"
+                data-gender="Male" data-photo="assets/profile pics/G2-2.jpeg"
+                data-linkedin="https://www.linkedin.com/in/mohammedkaif6/"
+                data-instagram="https://www.instagram.com/mr_anonymous_4666/" data-aos="fade-up" data-aos-delay="50"
+                data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/G2-1.jpg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Kaif'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Mohammed Kaif</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12G2</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Mohammed Yousuf -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Mohammed Yousuf" data-roll="22K81A12G3"
+                data-email="mohammadyousuf31672@gmail.com" data-phone="+91 7337593104" data-dob="10 Jul 2002"
+                data-gender="Male" data-photo="assets\profile pics\G3-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets\profile pics\G3-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Yousuf'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Mohammed Yousuf</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12G3</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Mohd Asif -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Mohd Asif" data-roll="22K81A12G4"
+                data-email="asifmohd8260@gmail.com" data-phone="+91 6304945604" data-dob="08 Jul 2003"
+                data-gender="Male" data-photo="assets/profile pics/G4-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="150" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/G4-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Asif'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Mohd Asif</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12G4</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Motati Jayasree -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Motati Jayasree" data-roll="22K81A12G5"
+                data-email="jayasreemotati3@gmail.com" data-phone="+91 9391152480" data-dob="13 Apr 2004"
+                data-gender="Female" data-photo="assets/profile pics/G5-2.jpeg"
+                data-linkedin="https://www.linkedin.com/in/motati-jayasree-2b46b8375"
+                data-instagram="https://www.instagram.com/jayasree_1344?igsh=MTcxeHlkamg3a3V5cA==" data-aos="fade-up"
+                data-aos-delay="200" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/G5-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Jayasree'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Motati Jayasree</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12G5</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Muthyala Divya -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Muthyala Divya" data-roll="22K81A12G6"
+                data-email="divyamuthyala1512@gmail.com" data-phone="+91 9494602158" data-dob="08 Jul 2004"
+                data-gender="Female" data-photo="assets/profile pics/G6-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="250" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/G6-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Divya'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Muthyala Divya</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12G6</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Nakkala Anunay Reddy -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Nakkala Anunay Reddy" data-roll="22K81A12G7"
+                data-email="anunayrdy002@gmail.com" data-phone="+91 9391144130" data-dob="15 Sep 2004"
+                data-gender="Male" data-photo="assets/profile pics/G7-1&2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/G7-1&2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Anunay'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Nakkala Anunay Reddy</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12G7</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Naredla Harini -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Naredla Harini" data-roll="22K81A12G9"
+                data-email="harinireddy3719@gmail.com" data-phone="+91 9440043719" data-dob="06 Nov 2004"
+                data-gender="Female" data-photo="assets/profile pics/G9-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="350" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/G9-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Harini'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Naredla Harini</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12G9</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Pannela Sucharitha -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Pannela Sucharitha" data-roll="22K81A12H0"
+                data-email="pannelasucharitha@gmail.com" data-phone="+91 7396648802" data-dob="24 May 2004"
+                data-gender="Female" data-photo="assets/profile pics/H0-1.jpg"
+                data-linkedin="https://www.linkedin.com/in/pannela-sucharitha-ba2b67374?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                data-instagram="https://www.instagram.com/pannelasucharitha?igsh=a3M3b3VsemNjY2I1" data-aos="fade-up"
+                data-aos-delay="0" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/H0-2.jpg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Sucharitha'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Pannela Sucharitha</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12H0</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Parshi Vaishnavi -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Parshi Vaishnavi" data-roll="22K81A12H1"
+                data-email="vaishnaviparshi01@gmail.com" data-phone="+91 6305637927" data-dob="01 Apr 2004"
+                data-gender="Female" data-photo="assets/profile pics/H1-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="50" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/H1-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Vaishnavi'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Parshi Vaishnavi</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12H1</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Partha Chaudhury -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Partha Chaudhury" data-roll="22K81A12H2"
+                data-email="parthachaudhury15@gmail.com" data-phone="+91 8790908631" data-dob="16 Jul 2005"
+                data-gender="Male" data-photo="assets/profile pics/H2-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/H2-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Partha'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Partha Chaudhury</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12H2</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Pottolla Parthiv Goud -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Pottolla Parthiv Goud" data-roll="22K81A12H3"
+                data-email="Parthiv08goud@gmail.com" data-phone="+91 7386804260" data-dob="08 Mar 2004"
+                data-gender="Male" data-photo="assets/profile pics/H3-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="150" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/H3-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Parthiv'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Pottolla Parthiv Goud</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12H3</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Ranga Abhigna -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Ranga Abhigna" data-roll="22K81A12H4"
+                data-email="rangaabhignagoud06@gmail.com" data-phone="+91 9493982123" data-dob="06 Jul 2004"
+                data-gender="Female" data-photo="assets/profile pics/H4-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/H4-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Abhigna'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Ranga Abhigna</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12H4</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Rangu Aravind Goud -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Rangu Aravind Goud" data-roll="22K81A12H5"
+                data-email="arvindgoudrangu@gmail.com" data-phone="+91 8464832421" data-dob="24 Aug 2004"
+                data-gender="Male" data-photo="assets/profile pics/H5-1&2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="250" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/H5-1&2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Aravind'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Rangu Aravind Goud</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12H5</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Rikkala Nikhitha Reddy -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Rikkala Nikhitha Reddy" data-roll="22K81A12H6"
+                data-email="rikkalanikhithareddyrikkala@gmail.com" data-phone="+91 7075597718" data-dob="06 Oct 2025"
+                data-gender="Female" data-photo="assets\profile pics\H6-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets\profile pics\H6-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Nikhitha'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Rikkala Nikhitha Reddy</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12H6</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Sambari Pranavi -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Sambari Pranavi" data-roll="22K81A12H7"
+                data-email="pranavisambari@gmail.com" data-phone="+91 9550066333" data-dob="09 Aug 2005"
+                data-gender="Female" data-photo="assets/profile pics/H7-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="350" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/H7-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Pranavi'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Sambari Pranavi</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12H7</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Shaik Mohammad Asrath -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Shaik Mohammad Asrath" data-roll="22K81A12H8"
+                data-email="asrath.smd@gmail.com" data-phone="+91 9010662445" data-dob="17 Sep 2004" data-gender="Male"
+                data-photo="assets/profile pics/Syco profile pic.jpg" data-linkedin="#" data-instagram="#" data-aos="fade-up"
+                data-aos-delay="0" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/Syco profile pic.jpg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Asrath'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Shaik Mohammad Asrath</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12H8</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Sidha Meghana -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Sidha Meghana" data-roll="22K81A12H9"
+                data-email="sidha78@gmail.com" data-phone="+91 8639688914" data-dob="16 Aug 2004" data-gender="Female"
+                data-photo="assets/profile pics/H9-2.jpeg"
+                data-linkedin="https://www.linkedin.com/in/meghana-sidha-7a73772bb"
+                data-instagram="https://www.instagram.com/meghana_1608?igsh=aGljaHNpMXUzbWU0" data-aos="fade-up"
+                data-aos-delay="50" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/H9-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Meghana'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Sidha Meghana</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12H9</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Sumayya Tarannum -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Sumayya Tarannum" data-roll="22K81A1J0"
+                data-email="sumayyatarannum810@gmail.com" data-phone="+91 8106190411" data-dob="30 Nov 2004"
+                data-gender="Female" data-photo="assets/profile pics/J0.jpeg"
+                data-linkedin="https://www.linkedin.com/in/sumayya-tarannum-706473334"
+                data-instagram="https://www.instagram.com/elziya_khan_?igsh=YTZxbGMzNnRlenRo" data-aos="fade-up"
+                data-aos-delay="100" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/J0.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Sumayya'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Sumayya Tarannum</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A1J0</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Sunkoju Sathwin -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Sunkoju Sathwin" data-roll="22K81A12J1"
+                data-email="sunkojusathwin06@gmail.com" data-phone="+91 8464987887" data-dob="06 May 2004"
+                data-gender="Male" data-photo="assets/profile pics/J1-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="150" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/J1-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Sathwin'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Sunkoju Sathwin</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12J1</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Tanoor Kiran -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Tanoor Kiran" data-roll="22K81A12J2"
+                data-email="tanoorkiran@gmail.com" data-phone="+91 7386944648" data-dob="25 Nov 2003" data-gender="Male"
+                data-photo="assets/profile pics/J2-1.jpeg" data-linkedin="#" data-instagram="#" data-aos="fade-up"
+                data-aos-delay="200" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/J2-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Kiran'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Tanoor Kiran</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12J2</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Tippareddy Shyam Sunder Reddy -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Tippareddy Shyam Sunder Reddy" data-roll="22K81A12J4"
+                data-email="tippareddyshyam@gmail.com" data-phone="+91 9849553868" data-dob="30 Dec 2003"
+                data-gender="Male" data-photo="assets/profile pics/J4-1&2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="250" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/J4-1&2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Shyam'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Tippareddy Shyam Sunder Reddy
+                    </h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12J4</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Utham Prasanna -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Utham Prasanna" data-roll="22K81A12J5"
+                data-email="uthamprasanna@gmail.com" data-phone="+91 9440070841" data-dob="23 Aug 2005"
+                data-gender="Female" data-photo="assets/profile pics/J5-2.jpeg"
+                data-linkedin="https://www.linkedin.com/in/utham-prasanna-6979b2312/" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/J5-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Prasanna'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Utham Prasanna</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12J5</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Vagvala Eshwar Arya -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Vagvala Eshwar Arya" data-roll="22K81A12J6"
+                data-email="vagvalaeshwararya@gmail.com" data-phone="+91 6281250171" data-dob="09 May 2005"
+                data-gender="Male" data-photo="assets/profile pics/J6.jpeg"
+                data-linkedin="https://www.linkedin.com/in/vagvala-eshwar-arya-096a0a304/"
+                data-instagram="https://www.instagram.com/eshwar_arya_918/" data-aos="fade-up" data-aos-delay="350"
+                data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/J6.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Eshwar'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Vagvala Eshwar Arya</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12J6</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Vittoli Sruthi -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Vittoli Sruthi" data-roll="22K81A12J7"
+                data-email="shruthivittoli@gmail.com" data-phone="+91 7981316955" data-dob="10 Jun 2004"
+                data-gender="Female" data-photo="assets/profile pics/J7-2.jpeg"
+                data-linkedin="https://www.linkedin.com/in/vittoli-sruthi-688bb4325?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                data-instagram="https://www.instagram.com/sruthi_rao_vittoli?igsh=MXJyYXppcHZwaHd1OQ=="
+                data-aos="fade-up" data-aos-delay="0" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/J7-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Sruthi'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Vittoli Sruthi</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12J7</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Vuppala Manish -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Vuppala Manish" data-roll="22K81A12J8"
+                data-email="manishvuppala070@gmail.com" data-phone="+91 9618280105" data-dob="28 Jan 2005"
+                data-gender="Male" data-photo="assets/profile pics/j8-2.jpeg"
+                data-linkedin="https://www.linkedin.com/in/manish-vuppala-01390a311?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                data-instagram="https://www.instagram.com/__firefist__?igsh=MTBnejR5Y3VsaXdyMA==" data-aos="fade-up"
+                data-aos-delay="50" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/j8-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Manish'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Vuppala Manish</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12J8</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Yeddula Bhavaneeth -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Yeddula Bhavaneeth" data-roll="22K81A12J9"
+                data-email="bhavaneeth60@gmail.com" data-phone="+91 6281013399" data-dob="29 Feb 2004"
+                data-gender="Male" data-photo="assets/profile pics/J9-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="100" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/J9-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Bhavaneeth'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Yeddula Bhavaneeth</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12J9</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Yellanki Saideep -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Yellanki Saideep" data-roll="22K81A12K0"
+                data-email="saideepyellanki9@gmail.com" data-phone="+91 9177377695" data-dob="24 Jun 2004"
+                data-gender="Male" data-photo="assets/profile pics/K0-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="150" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/K0-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Saideep'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Yellanki Saideep</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12K0</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Yenugu Sanjana -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Yenugu Sanjana" data-roll="22K81A12K1"
+                data-email="yenugusanjana@gmail.com" data-phone="+91 9666181982" data-dob="13 Jul 2004"
+                data-gender="Female" data-photo="assets/profile pics/K1-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/K1-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Sanjana'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Yenugu Sanjana</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12K1</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Mendu Sahithi Sai -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Mendu Sahithi Sai" data-roll="22K81A12K2"
+                data-email="sahithimendu09@gmail.com" data-phone="+91 9133220043" data-dob="30 Dec 2004"
+                data-gender="Female" data-photo="assets/profile pics/K2-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="250" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/K2-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Sahithi'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Mendu Sahithi Sai</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">22K81A12K2</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Shivannagari Shivasathwik Goud -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Shivannagari Shivasathwik Goud" data-roll="23K85A1213"
+                data-email="sathwikshivannagari@gmail.com" data-phone="+91 7794072398" data-dob="30 Aug 2004"
+                data-gender="Male" data-photo="https://api.dicebear.com/7.x/initials/svg?seed=Shivasathwik" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="300" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="https://api.dicebear.com/7.x/initials/svg?seed=Shivasathwik"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Shivasathwik'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Shivannagari Shivasathwik Goud
+                    </h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">23K85A1213</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Nenavath Venkatesh -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Nenavath Venkatesh" data-roll="23K85A1214"
+                data-email="nenavathvenkat54@gmail.com" data-phone="+91 9014615291" data-dob="25 May 2001"
+                data-gender="Male" data-photo="https://api.dicebear.com/7.x/initials/svg?seed=Venkatesh" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="350" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="https://api.dicebear.com/7.x/initials/svg?seed=Venkatesh"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Venkatesh'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Nenavath Venkatesh</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">23K85A1214</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Emmadi Ranjith Kumar -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Emmadi Ranjith Kumar" data-roll="23K85A1215"
+                data-email="ranjithemmadi9@gmail.com" data-phone="+91 7989768920" data-dob="06 Dec 2002"
+                data-gender="Male" data-photo="assets/profile pics/LE15-1.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="0" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/LE15-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Ranjith'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Emmadi Ranjith Kumar</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">23K85A1215</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Mangali Shirisha -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Mangali Shirisha" data-roll="23K85A1216"
+                data-email="mangalishirisha10@gmail.com" data-phone="+91 6305636230" data-dob="10 Aug 2004"
+                data-gender="Female" data-photo="assets/profile pics/LE16-2.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="50" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/LE16-1.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Shirisha'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Mangali Shirisha</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">23K85A1216</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Meesa Suchithra -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Meesa Suchithra" data-roll="23K85A1217"
+                data-email="suchithrameesa@gmail.com" data-phone="+91 9542615887" data-dob="22 Aug 2004"
+                data-gender="Female" data-photo="assets/profile pics/LE17-1.jpeg"
+                data-linkedin="https://www.linkedin.com/in/suchithra-meesa"
+                data-instagram="https://www.instagram.com/suchithra_36?igsh=MXBoc3pyM3N3eXAxdQ==" data-aos="fade-up"
+                data-aos-delay="100" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/LE17-2.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Suchithra'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Meesa Suchithra</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">23K85A1217</p>
+                </div>
+            </div>
+
+            <!-- Student Card: Measa Pooja -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="Measa Pooja" data-roll="23K85A1218"
+                data-email="poojameasa@gmail.com" data-phone="+91 9182114286" data-dob="30 Jun 2002"
+                data-gender="Female" data-photo="assets/profile pics/LE18-2.jpg"
+                data-linkedin="https://www.linkedin.com/in/measapooja9182"
+                data-instagram="https://www.instagram.com/p.o.o.j.a_773?igsh=MTdzd3NieGY3bWdobg==" data-aos="fade-up"
+                data-aos-delay="150" data-tilt data-tilt-max="3" data-tilt-speed="400" data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets/profile pics/LE18-1.jpg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Pooja'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">Measa Pooja</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">23K85A1218</p>
+                </div>
+            </div>
+
+            <!-- Student Card: A. Anji Kumar -->
+            <div class="student-card bg-white rounded-2xl overflow-hidden cursor-pointer relative card-shadow group"
+                onclick="openModal(this)" data-name="A. Anji Kumar" data-roll="23K85A1219"
+                data-email="anjikumar1219@gmail.com" data-phone="+91 8106088560" data-dob="08 Dec 2003"
+                data-gender="Male" data-photo="assets\profile pics\LE19.jpeg" data-linkedin="#" data-instagram="#"
+                data-aos="fade-up" data-aos-delay="200" data-tilt data-tilt-max="3" data-tilt-speed="400"
+                data-tilt-scale="1.02">
+
+                <div
+                    class="relative w-full aspect-portrait overflow-hidden card-img-container bg-slate-100 border-b border-slate-100">
+                    <img src="assets\profile pics\LE19.jpeg"
+                        class="transition-transform duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Anji'">
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <button
+                            class="px-6 py-2 bg-white/90 text-slate-900 font-serif font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl pointer-events-none">View
+                            Profile</button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-center bg-white relative z-10">
+                    <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 truncate">A. Anji Kumar</h3>
+                    <p class="text-xs font-bold text-gold uppercase tracking-[0.2em]">23K85A1219</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Prestige Modal -->
+    <div id="profile-modal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal()"></div>
+
+        <div
+            class="modal-content relative bg-white rounded-2xl overflow-hidden max-w-3xl w-full shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-visible">
+
+            <button onclick="closeModal()"
+                class="absolute top-4 right-4 z-50 p-2 text-white bg-black/50 hover:bg-black/70 rounded-full transition-all hover:rotate-90 shadow-lg">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+
+            <!-- Left: Image Section -->
+            <div
+                class="w-full md:w-2/5 relative h-80 md:h-auto bg-slate-100 flex items-center justify-center reveal-item delay-100">
+                <img id="modal-img" src=""
+                    class="w-full h-full object-contain md:object-cover object-center md:object-top">
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent md:hidden pointer-events-none">
+                </div>
+
+                <!-- Roll No Badge (Mobile) -->
+                <div class="absolute bottom-4 left-4 md:hidden text-white drop-shadow-md">
+                    <p class="text-sm font-bold text-gold uppercase tracking-widest" id="modal-roll-mobile">Roll No</p>
+                </div>
+            </div>
+
+            <!-- Right: Details Section -->
+            <div class="w-full md:w-3/5 p-8 md:p-12 bg-white relative">
+
+                <div class="mb-10 border-b border-gray-100 pb-6 reveal-item delay-200">
+                    <!-- IMPORTANT: id="modal-roll" is REQUIRED for js/directory.js to work without crashing -->
+                    <p id="modal-roll"
+                        class="hidden md:block text-xs font-bold text-gold uppercase tracking-[0.3em] mb-2">Roll No</p>
+                    <h2 id="modal-name" class="text-4xl md:text-5xl font-serif font-bold text-slate-900 leading-tight">
+                        Student Name</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-4 mb-10 font-sans reveal-item delay-300">
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">Date of Birth</p>
+                        <p id="modal-dob" class="text-lg font-medium text-slate-700">DOB</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">Gender</p>
+                        <p id="modal-gender" class="text-lg font-medium text-slate-700">Gender</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">Phone Number</p>
+                        <a id="modal-phone" href=""
+                            class="block text-lg font-medium text-slate-700 hover:text-gold transition-colors">+91
+                            ...</a>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">Mail</p>
+                        <a id="modal-email" href=""
+                            class="text-lg font-medium text-slate-700 hover:text-gold transition-colors break-all">email</a>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 items-center mt-auto reveal-item delay-400">
+                    <!-- Read Student Story Button -->
+                    <button id="view-full-profile-btn"
+                        class="w-full px-8 py-4 bg-slate-900 text-white font-bold uppercase tracking-widest hover:bg-maroon transition-colors shadow-lg">
+                        View Full Story
+                    </button>
+
+                    <div class="flex gap-3">
+                        <a id="modal-linkedin" href="#" target="_blank"
+                            class="hidden items-center justify-center w-12 h-12 border border-slate-200 text-slate-600 hover:text-white hover:bg-[#0077b5] hover:border-[#0077b5] transition-all rounded-full">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg>
+                        </a>
+                        <a id="modal-instagram" href="#" target="_blank"
+                            class="hidden items-center justify-center w-12 h-12 border border-slate-200 text-slate-600 hover:text-white hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-red-500 hover:to-purple-500 hover:border-transparent transition-all rounded-full">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<!-- Scripts -->
+<script>
+    // ==========================================
+    // 🚀 LIGHTWEIGHT MODAL LOGIC (formerly js/directory.js)
+    // ==========================================
+
+    // Modal Elements
+    const modal = document.getElementById('profile-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalName = document.getElementById('modal-name');
+    const modalRoll = document.getElementById('modal-roll');
+    const modalPhone = document.getElementById('modal-phone');
+    const modalEmail = document.getElementById('modal-email');
+    const modalDob = document.getElementById('modal-dob');
+    const modalGender = document.getElementById('modal-gender');
+    const viewFullProfileBtn = document.getElementById('view-full-profile-btn');
+
+    // Social Elements
+    const modalLinkedin = document.getElementById('modal-linkedin');
+    const modalInstagram = document.getElementById('modal-instagram');
+
+
+    const fontFamilies = [
+        "'Playfair Display', serif",
+        "'Roboto Slab', serif",
+        "'Merriweather', serif",
+        "'Lora', serif",
+        "'Montserrat', sans-serif",
+        "'Oswald', sans-serif",
+        "'Raleway', sans-serif",
+        "'Nunito', sans-serif",
+        "'Anton', sans-serif",
+        "'Quicksand', sans-serif"
+    ];
+
+    // Typewriter Helper
+    function typeWriter(element, text, speed = 50, callback) {
+        element.textContent = '';
+        element.style.opacity = '1';
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            } else if (callback) {
+                callback();
+            }
+        }
+        type();
+    }
+
+    function openModal(card) {
+        if (!modal || !modalImg || !modalName || !modalRoll || !modalPhone || !modalEmail || !modalDob || !modalGender) return;
+        // 1. Read Data
+        const name = card.getAttribute('data-name');
+        const roll = card.getAttribute('data-roll');
+        const email = card.getAttribute('data-email');
+        const phone = card.getAttribute('data-phone');
+        const dob = card.getAttribute('data-dob');
+        const gender = card.getAttribute('data-gender');
+        const photo = card.getAttribute('data-photo');
+        const linkedin = card.getAttribute('data-linkedin');
+        const instagram = card.getAttribute('data-instagram');
+
+        // 2. Randomize Font & Color
+        const randomFont = fontFamilies[Math.floor(Math.random() * fontFamilies.length)];
+        const modalContentDiv = document.querySelector('#profile-modal .modal-content');
+
+        // Apply font to the Right Side (Details Section)
+        const detailsSection = modalContentDiv ? modalContentDiv.querySelector('.w-full.md\\:w-3\\/5') : null;
+        if (detailsSection) detailsSection.style.fontFamily = randomFont;
+
+        // Generate a random dark color for text to keep it readable but "fantastic"
+        // Hue: random, Saturation: 60-80%, Lightness: 20-40% (Dark colors)
+        const randomHue = Math.floor(Math.random() * 360);
+        const randomColor = `hsl(${randomHue}, 70%, 30%)`;
+
+        modalName.style.color = randomColor;
+        modalRoll.style.color = randomColor;
+
+
+        // 3. Reset Text for Animation
+        modalName.textContent = '';
+        modalRoll.textContent = '';
+        modalPhone.textContent = '';
+        modalEmail.textContent = '';
+        modalDob.textContent = '';
+        modalGender.textContent = '';
+
+        // 4. Start Typing Animations sequentially
+        setTimeout(() => {
+            typeWriter(modalRoll, roll, 50, () => {
+                typeWriter(modalName, name, 50, () => {
+                    // Fade in the rest directly or type them fast? Let's type them fast.
+                    typeWriter(modalDob, dob, 20);
+                    typeWriter(modalGender, gender, 20);
+                    modalPhone.textContent = phone;
+                    modalPhone.href = `tel:${phone}`;
+                    modalEmail.textContent = email;
+                    modalEmail.href = `mailto:${email}`;
+
+                    // Ensure button link is set
+                    if (viewFullProfileBtn) {
+                        viewFullProfileBtn.onclick = () => {
+                            window.location.href = `view-profile.html?email=${encodeURIComponent(email)}`;
+                        };
+                    }
+                });
+            });
+        }, 300); // Small delay for modal open
+
+        // 5. Image Logic
+        modalImg.src = photo;
+        modalImg.onerror = function () {
+            this.src = `https://api.dicebear.com/7.x/initials/svg?seed=${name}`;
+        };
+
+        // 6. Social Media Logic
+        if (linkedin && linkedin !== "#" && linkedin !== "") {
+            modalLinkedin.href = linkedin;
+            modalLinkedin.classList.remove('hidden');
+            modalLinkedin.classList.add('flex');
+        } else {
+            modalLinkedin.classList.add('hidden');
+            modalLinkedin.classList.remove('flex');
+        }
+
+        if (instagram && instagram !== "#" && instagram !== "") {
+            modalInstagram.href = instagram;
+            modalInstagram.classList.remove('hidden');
+            modalInstagram.classList.add('flex');
+        } else {
+            modalInstagram.classList.add('hidden');
+            modalInstagram.classList.remove('flex');
+        }
+
+        // 7. Show Modal
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        // Mobile Roll Sync
+        const mobileRoll = document.getElementById('modal-roll-mobile');
+        if (mobileRoll) mobileRoll.textContent = roll;
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // ðŸ” SIMPLE SEARCH LOGIC
+    function filterStudents() {
+        const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return;
+        const term = searchInput.value.toLowerCase();
+        const cards = document.querySelectorAll('.student-card');
+
+        cards.forEach(card => {
+            const name = card.getAttribute('data-name').toLowerCase();
+            const roll = card.getAttribute('data-roll').toLowerCase();
+
+            if (name.includes(term) || roll.includes(term)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Attach to window
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+    window.filterStudents = filterStudents;
+</script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+<script>
+    AOS.init({
+        once: true,
+        offset: 50,
+        duration: 800,
+        easing: 'ease-out-cubic',
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function openMenu() {
+            if (!mobileMenu) return;
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => { mobileMenu.classList.remove('opacity-0'); mobileMenu.classList.add('opacity-100'); }, 10);
+        }
+
+        function closeMenu() {
+            if (!mobileMenu) return;
+            mobileMenu.classList.remove('opacity-100');
+            mobileMenu.classList.add('opacity-0');
+            setTimeout(() => { mobileMenu.classList.add('hidden'); mobileMenu.classList.remove('flex'); document.body.style.overflow = ''; }, 300);
+        }
+
+        if (menuBtn) menuBtn.addEventListener('click', openMenu);
+        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    });
+
+    // --- PWA SERVICE WORKER REGISTRATION ---
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('SW Registered!', reg))
+                .catch(err => console.log('SW Registration Failed!', err));
+        });
+    }
+</script>
+
+<!-- Mobile Bottom Navigation (Instagram Style) -->
+<div id="bottom-nav"
+    class="fixed bottom-0 left-0 w-full bg-white/80 backdrop-blur-lg border-t border-slate-200 z-[100] md:hidden px-6 pb-2 shadow-[0_-4px_12px_-2px_rgba(0,0,0,0.05)]">
+    <!-- Circular Update Profile Button (Mobile) -->
+    <a href="admin.html"
+        class="absolute -top-14 right-4 h-12 w-12 bg-maroon text-white rounded-full shadow-lg shadow-maroon/40 flex items-center justify-center border border-white/20 hover:scale-110 active:scale-95 transition-all z-50">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+            </path>
+        </svg>
+    </a>
+
+    <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex flex-col items-center gap-1 group">
+            <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+            <span
+                class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Home</span>
+        </a>
+        <a href="directory.html" class="flex flex-col items-center gap-1 group">
+            <svg class="w-6 h-6 text-gold transition-all duration-300" fill="currentColor" stroke="currentColor"
+                stroke-width="1" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <span class="text-[10px] font-bold uppercase tracking-tighter text-gold">Students</span>
+        </a>
+        <a href="community.html" class="flex flex-col items-center gap-1 group">
+            <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <span
+                class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Chat</span>
+        </a>
+        <a href="faculty.html" class="flex flex-col items-center gap-1 group">
+            <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <span
+                class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Faculty</span>
+        </a>
+        <a href="memories.html" class="flex flex-col items-center gap-1 group">
+            <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <span
+                class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Memories</span>
+        </a>
+        <a href="about.html" class="flex flex-col items-center gap-1 group">
+            <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span
+                class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">About</span>
+        </a>
+    </div>
+</div>
+</body>
+
+</html>
+

@@ -1,0 +1,900 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class of 2022-26 | St. Martin's Engineering College</title>
+    <link rel="icon" type="image/png" href="assets/logo.jpeg">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMEC IT">
+    <link rel="apple-touch-icon" href="assets/logo.jpeg">
+
+    <!-- Preload Hero Image -->
+    <link rel="preload" as="image" href="assets/hero-bg.jpg">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0f172a', /* Dark Blue */
+                        'gold': '#d4af37',
+                        'gold-light': '#f3e5ab',
+                        'maroon': '#800000',
+                        'surface': '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -5px rgba(0,0,0,0.1)',
+                        'gold-glow': '0 0 25px rgba(212, 175, 55, 0.25)',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body {
+            background-color: #fafafa;
+            /* Light background */
+            color: #1e293b;
+            /* Slate-800 text */
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+
+        /* Glass Navbar - Always visible, handles contrast */
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            border: 1px solid transparent;
+            background: white;
+        }
+
+        .card-shadow:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            border-color: #d4af37;
+        }
+
+        /* Text Stroke for Hero */
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+            color: transparent;
+        }
+
+        /* Marquee Gradient Mask */
+        .mask-gradient {
+            mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+        }
+
+        /* Navbar fix for overlapping content */
+        .pt-safe {
+            padding-top: 6rem;
+            /* Adjust based on navbar height */
+        }
+
+        /* Ken Burns Animation */
+        @keyframes ken-burns {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.15);
+            }
+        }
+
+        .animate-ken-burns {
+            animation: ken-burns 20s ease-in-out infinite alternate;
+        }
+
+        /* Bottom Nav App-Only Restriction */
+        #bottom-nav {
+            display: none !important;
+        }
+
+        @media screen and (max-width: 767px) {
+            @media (display-mode: standalone) {
+                #bottom-nav {
+                    display: block !important;
+                }
+
+                #mobile-menu-btn {
+                    display: none !important;
+                }
+            }
+        }
+
+        /* Bottom Nav Safe Area */
+        @media (max-width: 767px) {
+            body {
+                padding-bottom: 5rem;
+            }
+        }
+
+        /* Hide Top Menu in Standalone (App) Mode */
+        @media (display-mode: standalone) {
+            #mobile-menu-btn {
+                display: none !important;
+            }
+        }
+    </style>
+    <script src="js/greetings.js" defer></script>
+</head>
+
+<body class="antialiased selection:bg-gold selection:text-white">
+
+    <!-- Welcome Popup Modal -->
+    <div id="welcome-modal" class="fixed inset-0 z-[200] hidden items-center justify-center px-4">
+        <div id="modal-backdrop" class="absolute inset-0 bg-slate-950 opacity-0"></div>
+        <div id="modal-card"
+            class="relative bg-white p-8 md:p-12 rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] max-w-lg w-full text-center scale-90 opacity-0 transform-gpu">
+            <!-- Close Button (X) -->
+            <button id="x-close"
+                class="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-900 transition-colors z-20">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+
+            <!-- Decorative Elements -->
+            <div
+                class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-gold via-maroon to-gold rounded-t-[2.5rem]">
+            </div>
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-gold/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-maroon/10 rounded-full blur-3xl"></div>
+
+            <div class="relative z-10">
+                <div class="mb-6 inline-flex p-4 bg-slate-900 rounded-2xl shadow-lg shadow-slate-900/20 rotate-3">
+                    <span id="greeting-icon" class="text-3xl">✨</span>
+                </div>
+
+                <h2 id="greeting-text"
+                    class="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-4 leading-tight">
+                    Good Morning!
+                </h2>
+
+                <div class="w-12 h-[2px] bg-gold/30 mx-auto mb-6"></div>
+
+                <p id="greeting-quote" class="text-lg md:text-xl text-slate-600 font-serif italic leading-relaxed mb-8">
+                    "Technology is best when it brings people together."
+                </p>
+
+                <p class="text-[10px] uppercase tracking-[0.2em] font-bold text-gold mb-8">
+                    St. Martin's IT • Class of 2022-26
+                </p>
+
+                <button id="close-welcome"
+                    class="group relative px-10 py-4 bg-slate-900 text-white font-bold rounded-full overflow-hidden transition-all hover:shadow-2xl hover:shadow-slate-900/30 hover:-translate-y-1">
+                    <span class="relative z-10 flex items-center justify-center gap-2">
+                        Get Started
+                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </span>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-slate-800 to-slate-900 opacity-0 group-hover:opacity-100 transition-opacity">
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-30 pointer-events-none"
+        style="background-image: radial-gradient(#d4af37 0.5px, transparent 0.5px); background-size: 24px 24px;">
+    </div>
+
+    <!-- Navigation (Light Theme / Glass) -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-4 group">
+                <div class="relative">
+                    <img src="assets/logo.jpeg"
+                        class="relative h-12 w-12 rounded-full border-2 border-gold shadow-md p-0.5 bg-white">
+                </div>
+                <div class="flex flex-col">
+                    <span
+                        class="text-2xl font-serif font-bold text-slate-900 tracking-wide group-hover:text-gold transition-colors">SMEC</span>
+                    <span class="text-[10px] uppercase text-gold font-bold tracking-[0.2em]">IT Dept '22-26</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-2 font-serif text-sm tracking-wide">
+                <a href="index.html"
+                    class="px-5 py-2 text-white bg-slate-900 rounded-full shadow-lg border border-gold font-bold">HOME</a>
+                <a href="about.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">ABOUT</a>
+                <a href="directory.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">STUDENTS</a>
+                <a href="faculty.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">FACULTY</a>
+                <a href="memories.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">MEMORIES</a>
+                <a href="community.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">COMMUNITY</a>
+                <a href="admin.html"
+                    class="ml-6 px-8 py-2.5 text-white bg-slate-900 rounded-full shadow-lg border border-gold font-bold hover:bg-slate-800 transition-all hover:-translate-y-0.5">UPDATE</a>
+            </div>
+
+            <!-- Mobile Menu Btn -->
+            <button id="mobile-menu-btn"
+                class="md:hidden p-2 text-slate-800 hover:text-gold bg-slate-100/50 rounded-lg backdrop-blur-sm border border-slate-200/50 shadow-sm transition-all hover:bg-slate-200/50">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 z-[100] bg-white/98 backdrop-blur-xl hidden flex-col items-center justify-center space-y-8 opacity-0 transition-opacity duration-300">
+        <button id="close-menu-btn" class="absolute top-8 right-8 p-4 text-slate-400 hover:text-slate-800">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <a href="index.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Home</a>
+        <a href="about.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">About</a>
+        <a href="directory.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Students</a>
+        <a href="faculty.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Faculty</a>
+        <a href="memories.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Memories</a>
+        <a href="community.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Community</a>
+        <a href="admin.html" class="text-4xl font-serif font-bold text-gold border-b-2 border-gold pb-2">Update
+            Profile</a>
+    </div>
+
+    <!-- Hero Section (Responsive Height) -->
+    <!-- Increased pt-28 to ensure content starts below the fixed glass navbar -->
+    <header class="relative w-full min-h-screen flex items-center justify-center pt-28 pb-12">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <img src="assets/college.png" alt="SMEC Campus" class="w-full h-full object-cover animate-ken-burns"
+                id="hero-image" fetchpriority="high" loading="eager">
+            <div class="absolute inset-0 bg-white/70 backdrop-blur-[1px]"></div>
+            <!-- Pattern Overlay -->
+            <div class="absolute inset-0 bg-[radial-gradient(circle,_rgba(15,23,42,0.12)_1px,_transparent_1px)] [background-size:18px_18px] opacity-40"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 w-full max-w-6xl mx-auto mt-4 md:mt-0" data-aos="fade-up"
+            data-aos-duration="1200">
+            <div class="flex justify-center items-center gap-4 mb-4 opacity-0 translate-y-4 hero-sub">
+                <span class="h-[1px] w-8 md:w-12 bg-slate-900"></span>
+                <p class="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] text-slate-900">UGC
+                    Autonomous • NAAC A+</p>
+                <span class="h-[1px] w-8 md:w-12 bg-slate-900"></span>
+            </div>
+
+            <h1 class="font-serif font-bold leading-none tracking-tight mb-6 md:mb-8">
+                <span class="block text-4xl md:text-6xl lg:text-7xl xl:text-8xl text-slate-900 mb-2 md:mb-4">ST.
+                    MARTIN'S</span>
+                <span
+                    class="block text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-gold drop-shadow-sm mb-2 md:mb-4">ENGINEERING</span>
+                <span class="block text-4xl md:text-6xl lg:text-7xl xl:text-8xl text-slate-900">COLLEGE</span>
+            </h1>
+
+            <p
+                class="text-xs md:text-lg font-medium text-slate-600 max-w-xl mx-auto mb-4 tracking-wider uppercase font-serif">
+                "Shaping Viksit Bharat's Brightest Minds"
+            </p>
+
+            <p
+                class="text-xl md:text-3xl font-bold text-slate-800 max-w-2xl mx-auto opacity-0 translate-y-4 leading-relaxed hero-sub uppercase tracking-wide mb-2">
+                Department of Information Technology
+            </p>
+
+            <div class="opacity-0 translate-y-4 hero-sub">
+                <span class="text-slate-900 font-bold border-b-2 border-gold pb-1 inline-block">Class of 2022 -
+                    2026</span>
+            </div>
+
+            <div class="mt-8 md:mt-12 opacity-0 translate-y-4 hero-sub">
+                <a href="#philosophy"
+                    class="inline-flex flex-col items-center text-slate-400 hover:text-gold transition-colors animate-pulse-slow">
+                    <span class="text-[10px] uppercase tracking-widest mb-2 font-bold">Explore the Legacy</span>
+                    <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="w-full min-h-screen flex items-center justify-center px-6 py-24 relative">
+        <div class="max-w-6xl text-center relative z-10">
+            <div class="mb-12" data-aos="fade-down"><span
+                    class="text-xs font-bold uppercase tracking-[0.3em] text-gold border px-3 py-1 rounded-full border-gold">01.
+                    The Purpose</span></div>
+
+            <h2 class="text-4xl md:text-6xl font-serif leading-tight mb-16 text-slate-900" data-aos="fade-up">
+                Why does this exist?<br>
+                <span class="text-slate-500 italic text-2xl md:text-4xl block mt-4 font-light">"Because paper fades, but
+                    data is forever."</span>
+            </h2>
+
+            <!-- Mobile: Stacked, Desktop: Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-left mt-16">
+                <!-- Card 1 -->
+                <div class="card-shadow p-8 rounded-2xl group hover:-translate-y-2" data-aos="fade-up"
+                    data-aos-delay="0" data-tilt>
+                    <div
+                        class="text-4xl mb-6 bg-slate-50 w-16 h-16 flex items-center justify-center rounded-full text-gold group-hover:bg-gold group-hover:text-white transition-colors shadow-sm">
+                        💡</div>
+                    <h3 class="text-xl font-bold mb-4 font-serif text-slate-900">The What</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">A digital sanctuary for 69 students & faculty
+                        members. It's not just a list of names; it's a collection of 4 years of struggle, success, and
+                        Journey.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card-shadow p-8 rounded-2xl group hover:-translate-y-2" data-aos="fade-up"
+                    data-aos-delay="100" data-tilt>
+                    <div
+                        class="text-4xl mb-6 bg-slate-50 w-16 h-16 flex items-center justify-center rounded-full text-gold group-hover:bg-gold group-hover:text-white transition-colors shadow-sm">
+                        ⚡</div>
+                    <h3 class="text-xl font-bold mb-4 font-serif text-slate-900">The How</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">Built on a modern stack, powered by Firebase, and
+                        crafted with love. Every profile is user-generated, ensuring that your story is told exactly how
+                        you want it to be told.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card-shadow p-8 rounded-2xl group hover:-translate-y-2" data-aos="fade-up"
+                    data-aos-delay="200" data-tilt>
+                    <div
+                        class="text-4xl mb-6 bg-slate-50 w-16 h-16 flex items-center justify-center rounded-full text-gold group-hover:bg-gold group-hover:text-white transition-colors shadow-sm">
+                        🚀</div>
+                    <h3 class="text-xl font-bold mb-4 font-serif text-slate-900">The Why</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">To freeze time. As we step out of College and
+                        into the corporate world, this link will remain the one place we can all return to, anytime,
+                        anywhere.</p>
+                </div>
+            </div>
+
+            <div class="mt-20" data-aos="zoom-in">
+                <a href="about.html"
+                    class="inline-block px-10 py-4 border border-slate-900 text-slate-900 font-bold uppercase tracking-widest text-xs hover:bg-slate-900 hover:text-white transition-all rounded-full shadow-lg">Discover
+                    Our Roots →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Memories Section -->
+    <section id="memories"
+        class="w-full bg-white text-slate-900 py-24 overflow-hidden relative border-t border-slate-100">
+        <div class="text-center mb-16 relative z-10 px-6" data-aos="fade-up">
+            <h2 class="text-5xl md:text-8xl font-serif text-slate-900 mb-2">Unfiltered.</h2>
+            <h2 class="text-5xl md:text-8xl font-serif text-gold mb-6 italic">Memories.</h2>
+            <p class="text-sm text-slate-500 tracking-widest uppercase">Hover to Pause • Click to Expand</p>
+        </div>
+
+        <!-- Scrollable/Marquee Container -->
+        <div
+            class="h-[600px] md:h-[800px] overflow-hidden flex justify-center gap-4 md:gap-8 relative mask-gradient px-4 md:px-0">
+
+            <div class="marquee-col w-[45%] md:w-[30%] flex flex-col gap-4 md:gap-8 will-change-transform" id="col-1">
+                <img src="assets/memories/pic1.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic2.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic3.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic4.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic5.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic6.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic7.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+            </div>
+
+            <div class="marquee-col w-[45%] md:w-[30%] flex flex-col gap-4 md:gap-8 -mt-12 md:-mt-32 will-change-transform"
+                id="col-2">
+                <img src="assets/memories/pic11.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic12.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic13.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic14.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic15.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic16.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic17.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+            </div>
+
+            <div class="marquee-col hidden md:flex md:w-[30%] flex-col gap-4 md:gap-8 will-change-transform" id="col-3">
+                <img src="assets/memories/pic21.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic22.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic23.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic24.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic25.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic26.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+                <img src="assets/memories/pic27.jpeg"
+                    class="rounded-xl shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 card-shadow"
+                    loading="lazy">
+            </div>
+        </div>
+
+        <div class="text-center mt-12 relative z-10" data-aos="fade-up">
+            <a href="memories.html"
+                class="inline-flex items-center gap-3 px-10 py-5 bg-gold text-white font-bold text-lg rounded-full hover:bg-slate-900 hover:text-white hover:scale-105 transition-all duration-300 shadow-lg shadow-gold/20">
+                View All Memories
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
+                    </path>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer similar to about.html -->
+    <footer class="bg-black text-white py-12 text-center text-sm border-t border-slate-900">
+        <p>Developed with â¤ï¸ by <a href="https://www.linkedin.com/in/mohammedkaif6/" target="_blank"
+                class="text-gold font-bold hover:underline">Mohammed Kaif</a></p>
+        <p class="mt-2 text-xs opacity-60">St. Martin's Engineering College | Department of IT | Class of 2022-26</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        // Force scroll to top on every load/reload
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+
+        // Init Animations
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+
+        // Mobile Menu Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            function openMenu() {
+                if (!mobileMenu) return;
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => { mobileMenu.classList.remove('opacity-0'); mobileMenu.classList.add('opacity-100'); }, 10);
+            }
+
+            function closeMenu() {
+                if (!mobileMenu) return;
+                mobileMenu.classList.remove('opacity-100');
+                mobileMenu.classList.add('opacity-0');
+                setTimeout(() => { mobileMenu.classList.add('hidden'); mobileMenu.classList.remove('flex'); document.body.style.overflow = ''; }, 300);
+            }
+
+            if (menuBtn) menuBtn.addEventListener('click', openMenu);
+            if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+
+            // Trigger Hero Animations manually for instant feel
+            gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: 'power2.out', delay: 0.5 });
+        });
+
+
+        // --- MARQUEE AUTO-CLONE SCRIPT (GSAP) ---
+        const setupMarquee = () => {
+            const cols = ['#col-1', '#col-2', '#col-3'];
+            cols.forEach((id, index) => {
+                const el = document.querySelector(id);
+                if (!el) return;
+                const content = el.innerHTML;
+                el.innerHTML = content + content;
+                const speed = 20 + (index * 5);
+                const reverse = index === 1;
+                gsap.fromTo(el,
+                    { yPercent: reverse ? -50 : 0 },
+                    { yPercent: reverse ? 0 : -50, duration: speed, ease: "none", repeat: -1 }
+                );
+                el.addEventListener('mouseenter', () => gsap.to(el, { timeScale: 0, duration: 0.5 }));
+                el.addEventListener('mouseleave', () => gsap.to(el, { timeScale: 1, duration: 0.5 }));
+            });
+        };
+
+        // --- WELCOME POPUP LOGIC ---
+        const initWelcomePopup = () => {
+            const modal = document.getElementById('welcome-modal');
+            const backdrop = document.getElementById('modal-backdrop');
+            const card = document.getElementById('modal-card');
+            const closeBtn = document.getElementById('close-welcome');
+            const greetingText = document.getElementById('greeting-text');
+            const greetingIcon = document.getElementById('greeting-icon');
+            const greetingQuote = document.getElementById('greeting-quote');
+
+            if (!modal || !card) return;
+
+            // 1. Determine Time-based Greeting
+            const hour = new Date().getHours();
+            let greeting = "Good Evening!";
+            let icon = "✨";
+
+            if (hour >= 5 && hour < 12) {
+                greeting = "Good Morning!";
+                icon = "â˜€ï¸";
+            } else if (hour >= 12 && hour < 17) {
+                greeting = "Good Afternoon!";
+                icon = "🌍¤ï¸";
+            } else if (hour >= 17 && hour < 21) {
+                greeting = "Good Evening!";
+                icon = "🌆";
+            } else {
+                greeting = "Good Night!";
+                icon = "🌙";
+            }
+
+            // 2. Technical/Inspirational Quotations
+            const quotes = [
+                "\"Technology is best when it brings people together.\"",
+                "\"The best way to predict the future is to create it.\"",
+                "\"Innovation distinguishes between a leader and a follower.\"",
+                "\"Code is like humor. When you have to explain it, it’s bad.\"",
+                "\"Your story is yours to tell. Welcome to the legacy of '22-26.\"",
+                "\"The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice.\"",
+                "\"Design is not just what it looks like and feels like. Design is how it works.\"",
+                "\"Learning never exhausts the mind.\"",
+                "\"Push yourself, because no one else is going to do it for you.\"",
+                "\"Small progress is still progress.\"",
+                "\"Discipline is choosing between what you want now and what you want most.\"",
+                "\"Make it work, make it right, make it fast.\"",
+                "\"First, solve the problem. Then, write the code.\"",
+                "\"Programs must be written for people to read, and only incidentally for machines to execute.\"",
+                "\"Experience is the name everyone gives to their mistakes.\"",
+                "\"Knowledge grows when shared.\"",
+                "\"Teamwork divides the task and multiplies the success.\"",
+                "\"Your only limit is your mindset.\"",
+                "\"Every accomplishment starts with the decision to try.\"",
+                "\"Creativity is intelligence having fun.\"",
+                "\"Be so good they can’t ignore you.\"",
+                "\"Success usually comes to those who are too busy to be looking for it.\"",
+                "\"Do something today that your future self will thank you for.\"",
+                "\"Consistency creates excellence.\"",
+                "\"Work hard in silence; let success make the noise.\"",
+                "\"Focus on progress, not perfection.\"",
+                "\"Ideas are easy. Implementation is everything.\"",
+                "\"The best error message is the one that never shows up.\"",
+                "\"Code never lies, comments sometimes do.\"",
+                "\"Debugging is like being the detective in a crime movie where you are also the murderer.\"",
+                "\"Build things that make a difference.\"",
+                "\"Success is built on persistence.\"",
+                "\"Your mindset determines your direction.\"",
+                "\"Growth begins at the end of your comfort zone.\"",
+                "\"Think different. Build different.\"",
+                "\"The best teams create the best memories.\"",
+                "\"Every line of code tells a story.\"",
+                "\"Leave something better than you found it.\"",
+                "\"The journey matters more than the destination.\"",
+                "\"Believe you can and you're halfway there.\"",
+                "\"Turn ideas into reality.\"",
+                "\"Collaboration fuels innovation.\"",
+                "\"Failure is simply the opportunity to begin again, this time more intelligently.\"",
+                "\"Stay curious, keep building.\"",
+                "\"Technology changes fast, but learning lasts forever.\"",
+                "\"Your legacy is written by what you create.\"",
+                "\"Make today count.\"",
+                "\"Great minds don’t think alike — they think together.\""
+            ];
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+            // 3. Update DOM
+            greetingText.innerText = greeting;
+            greetingIcon.innerText = icon;
+            greetingQuote.innerText = randomQuote;
+
+            // 4. Entrance Animation & Scroll Lock
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            const tl = gsap.timeline({ delay: 0.8 });
+            tl.to(backdrop, { opacity: 1, duration: 1, ease: "power2.out" })
+                .to(card, { opacity: 1, scale: 1, duration: 1.2, ease: "expo.out" }, "-=0.6")
+                .from(card.children[3].children, { y: 20, opacity: 0, stagger: 0.1, duration: 0.8, ease: "power2.out" }, "-=0.8");
+
+            // 5. Close Logic
+            const closeModal = () => {
+                gsap.to(card, { scale: 0.9, opacity: 0, duration: 0.5, ease: "power2.in" });
+                gsap.to(backdrop, {
+                    opacity: 0, duration: 0.5, ease: "power2.in", onComplete: () => {
+                        modal.classList.add('hidden');
+                        modal.classList.remove('flex');
+                        document.body.style.overflow = '';
+                    }
+                });
+            };
+
+            closeBtn.addEventListener('click', closeModal);
+            document.getElementById('x-close').addEventListener('click', closeModal);
+            backdrop.addEventListener('click', closeModal);
+        };
+
+        // Run marquee setup slightly delayed to ensure DOM is fully ready
+        setTimeout(() => {
+            setupMarquee();
+
+            // Show welcome popup only once per session
+            if (!sessionStorage.getItem('welcome_popup_shown')) {
+                initWelcomePopup();
+                sessionStorage.setItem('welcome_popup_shown', 'true');
+            }
+        }, 100);
+
+        // --- PWA SERVICE WORKER REGISTRATION ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW Registered!', reg))
+                    .catch(err => console.log('SW Registration Failed!', err));
+            });
+        }
+
+        // --- CUSTOM INSTALL PROMPT LOGIC ---
+        let deferredPrompt;
+        const installBanner = document.getElementById('pwa-install-banner');
+        const installBtn = document.getElementById('install-pwa-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            // Update UI to notify the user they can add to home screen
+            if (installBanner) {
+                installBanner.classList.remove('hidden');
+                setTimeout(() => installBanner.style.transform = 'translateY(0)', 100);
+            }
+        });
+
+        installBtn?.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            // Show the prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response to the install prompt: ${outcome}`);
+            // We've used the prompt, and can't use it again, throw it away
+            deferredPrompt = null;
+            // Hide the banner
+            installBanner.style.transform = 'translateY(150%)';
+            setTimeout(() => installBanner.classList.add('hidden'), 500);
+        });
+
+        // iOS Specific Check (Show custom info popup)
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+
+        if (isIOS && !isStandalone) {
+            const iosPrompt = document.getElementById('ios-install-prompt');
+            if (iosPrompt) {
+                setTimeout(() => {
+                    iosPrompt.classList.remove('hidden');
+                    iosPrompt.classList.add('flex');
+                }, 3000); // Delay for better UX
+            }
+        }
+
+        const closeIos = () => {
+            const prompt = document.getElementById('ios-install-prompt');
+            if (prompt) {
+                prompt.style.opacity = '0';
+                setTimeout(() => prompt.classList.add('hidden'), 500);
+            }
+        };
+
+        window.closeIosPrompt = closeIos;
+    </script>
+
+    <!-- PWA Install Banner (Android/Chrome) -->
+    <div id="pwa-install-banner"
+        class="fixed bottom-24 left-4 right-4 z-[150] hidden translate-y-[150%] transition-transform duration-500">
+        <div
+            class="bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border border-gold/30 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="h-10 w-10 bg-gold rounded-lg flex items-center justify-center shrink-0">
+                    <svg class="w-6 h-6 text-slate-900" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-bold">Download App</p>
+                    <p class="text-[10px] text-slate-400">Install for a faster, better experience!</p>
+                </div>
+            </div>
+            <button id="install-pwa-btn"
+                class="px-5 py-2 bg-gold text-slate-900 text-xs font-bold rounded-full hover:scale-105 transition-transform">
+                INSTALL
+            </button>
+        </div>
+    </div>
+
+    <!-- iOS Install Instructions (Safari) -->
+    <div id="ios-install-prompt"
+        class="fixed inset-0 z-[200] hidden items-center justify-center px-6 bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white p-8 rounded-[2rem] shadow-2xl max-w-sm w-full text-center relative">
+            <button onclick="closeIosPrompt()" class="absolute top-4 right-4 text-slate-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    </path>
+                </svg>
+            </button>
+            <div class="h-16 w-16 bg-gold/10 text-gold rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-serif font-bold text-slate-900 mb-2">Install on iOS</h3>
+            <p class="text-sm text-slate-500 mb-6 leading-relaxed">
+                Tap the <span class="bg-slate-100 px-1.5 py-0.5 rounded font-bold">Share</span> button in Safari and
+                select <span class="bg-slate-100 px-1.5 py-0.5 rounded font-bold">"Add to Home Screen"</span> to enjoy
+                the full app experience.
+            </p>
+            <button onclick="closeIosPrompt()" class="w-full py-3 bg-slate-900 text-white rounded-full font-bold">GOT
+                IT</button>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation (Instagram Style) -->
+    <div id="bottom-nav"
+        class="fixed bottom-0 left-0 w-full bg-white/80 backdrop-blur-lg border-t border-slate-200 z-[100] md:hidden px-6 pb-2 shadow-[0_-4px_12px_-2px_rgba(0,0,0,0.05)]">
+        <div class="flex items-center justify-between h-16">
+            <a href="index.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-gold transition-all duration-300" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+                <span class="text-[10px] font-bold uppercase tracking-tighter text-gold">Home</span>
+            </a>
+            <a href="directory.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Students</span>
+            </a>
+            <a href="community.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Chat</span>
+            </a>
+            <a href="faculty.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Faculty</span>
+            </a>
+            <a href="memories.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Memories</span>
+            </a>
+            <a href="about.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">About</span>
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty | Department of IT</title>
+    <link rel="icon" type="image/png" href="assets/logo.jpeg">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMEC IT">
+    <link rel="apple-touch-icon" href="assets/logo.jpeg">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0f172a', /* Dark Blue */
+                        'gold': '#d4af37',
+                        'gold-light': '#f3e5ab',
+                        'maroon': '#800000',
+                        'surface': '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -5px rgba(0,0,0,0.1)',
+                        'gold-glow': '0 0 25px rgba(212, 175, 55, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body {
+            background-color: #fafafa;
+            /* Light background */
+            color: #1e293b;
+            /* Slate-800 text */
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Card Mechanics */
+        .faculty-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border: 1px solid transparent;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .faculty-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #d4af37;
+        }
+
+        /* Image Zoom Effect */
+        .img-container {
+            overflow: hidden;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform 0.7s ease;
+        }
+
+        .faculty-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        /* Contact Links */
+        .contact-link {
+            transition: color 0.2s;
+        }
+
+        .contact-link:hover {
+            color: #d4af37;
+            text-decoration: underline;
+        }
+
+        /* Navbar fix for overlapping content */
+        .pt-safe {
+            padding-top: 6rem;
+        }
+
+        /* Bottom Nav Safe Area */
+        @media (max-width: 767px) {
+            body {
+                padding-bottom: 5rem;
+            }
+        }
+
+        /* Bottom Nav App-Only Restriction */
+        #bottom-nav {
+            display: none !important;
+        }
+
+        @media screen and (max-width: 767px) {
+            @media (display-mode: standalone) {
+                #bottom-nav {
+                    display: block !important;
+                }
+
+                #mobile-menu-btn {
+                    display: none !important;
+                }
+            }
+        }
+    </style>
+    <script src="js/greetings.js" defer></script>
+</head>
+
+<body class="antialiased selection:bg-gold selection:text-white">
+
+    <!-- Background Image with Overlay -->
+    <div class="fixed top-0 left-0 w-full h-full -z-10">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+            style="background-image: url('assets/faculty.jpeg');"></div>
+        <div class="absolute inset-0 bg-white/90 backdrop-blur-[2px]"></div>
+    </div>
+
+    <!-- Navigation (Light Theme / Glass) -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-4 group">
+                <div class="relative">
+                    <img src="assets/logo.jpeg"
+                        class="relative h-12 w-12 rounded-full border-2 border-gold shadow-md p-0.5 bg-white">
+                </div>
+                <div class="flex flex-col">
+                    <span
+                        class="text-2xl font-serif font-bold text-slate-900 tracking-wide group-hover:text-gold transition-colors">SMEC</span>
+                    <span class="text-[10px] uppercase text-gold font-bold tracking-[0.2em]">IT Dept '22-26</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-2 font-serif text-sm tracking-wide">
+                <a href="index.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">HOME</a>
+                <a href="about.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">ABOUT</a>
+                <a href="directory.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">STUDENTS</a>
+                <a href="faculty.html"
+                    class="px-5 py-2 text-white bg-slate-900 rounded-full shadow-lg border border-gold font-bold">FACULTY</a>
+                <a href="memories.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">MEMORIES</a>
+                <a href="community.html"
+                    class="px-5 py-2 text-slate-600 hover:text-gold transition-colors font-medium">COMMUNITY</a>
+                <a href="admin.html"
+                    class="ml-6 px-8 py-2.5 text-white bg-gradient-to-r from-maroon to-red-900 rounded-full shadow-lg hover:shadow-red-900/40 hover:scale-105 transition-all font-bold">UPDATE</a>
+            </div>
+
+            <!-- Mobile Menu Btn -->
+            <button id="mobile-menu-btn"
+                class="md:hidden p-2 text-slate-800 hover:text-gold bg-slate-100/50 rounded-lg backdrop-blur-sm border border-slate-200/50 shadow-sm transition-all hover:bg-slate-200/50">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 z-[100] bg-white/98 backdrop-blur-xl hidden flex-col items-center justify-center space-y-8 opacity-0 transition-opacity duration-300">
+        <button id="close-menu-btn" class="absolute top-8 right-8 p-4 text-slate-400 hover:text-slate-800">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <a href="index.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Home</a>
+        <a href="about.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">About</a>
+        <a href="directory.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Students</a>
+        <a href="faculty.html" class="text-4xl font-serif font-bold text-gold border-b-2 border-gold pb-2">Faculty</a>
+        <a href="memories.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Memories</a>
+        <a href="community.html"
+            class="text-4xl font-serif font-bold text-slate-800 hover:text-gold transition-colors">Community</a>
+        <a href="admin.html"
+            class="mt-4 px-10 py-4 text-xl font-bold text-white bg-maroon rounded-full shadow-xl">Update Profile</a>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative pt-44 pb-20 px-6 text-center overflow-hidden">
+        <div class="relative z-10 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+            <h1
+                class="text-5xl md:text-7xl font-serif font-bold mb-6 text-slate-900 tracking-tight leading-none drop-shadow-sm">
+                OUR <span class="text-gold italic">MENTORS</span>
+            </h1>
+            <p
+                class="text-slate-500 font-serif text-lg md:text-xl tracking-widest uppercase mb-8 border-y border-gold/30 py-4 inline-block px-12">
+                The pillars of the Department of Information Technology
+            </p>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <div class="max-w-3xl mx-auto px-6 mb-20 relative z-20" data-aos="fade-up" data-aos-delay="100">
+        <input type="text" id="searchInput" placeholder="Search Faculty by Name..." onkeyup="filterFaculty()"
+            class="relative w-full px-8 py-5 rounded-full border border-slate-100 bg-white shadow-lg focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold text-lg placeholder-slate-400 text-slate-800 transition-all hover:shadow-xl">
+    </div>
+
+    <!-- Faculty Grid -->
+    <main class="max-w-7xl mx-auto px-6 pb-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+
+            <!-- K. Surya Kanthi -->
+            <div class="faculty-card rounded-3xl overflow-hidden group" data-name="K. Surya Kanthi" data-aos="fade-up">
+                <div class="img-container relative h-96 w-full bg-slate-100">
+                    <img src="assets/Faculty/Suryakanthi mam.jpeg" class="card-image"
+                        onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Surya'">
+                    <div class="absolute bottom-4 left-4">
+                        <span
+                            class="px-4 py-1.5 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">IT
+                            Dept</span>
+                    </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-slate-900 mb-1">K. Surya Kanthi</h3>
+                        <p class="text-xs font-bold text-gold uppercase tracking-widest mb-6">Assistant Professor</p>
+                        <div class="w-12 h-1 bg-slate-100 mb-6 group-hover:bg-gold transition-colors"></div>
+                    </div>
+                    <div class="space-y-3 text-sm text-slate-600">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">📞</span>
+                            <span class="font-semibold text-slate-900">+91 8179321422</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">✉️</span>
+                            <a href="mailto:ksuryakanthiit@smec.ac.in"
+                                class="contact-link font-semibold break-all">ksuryakanthiit@smec.ac.in</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">👤</span>
+                            <span class="font-semibold text-slate-900">Female</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- T. Bhargavi -->
+            <div class="faculty-card rounded-3xl overflow-hidden group" data-name="T. Bhargavi" data-aos="fade-up"
+                data-aos-delay="100">
+                <div class="img-container relative h-96 w-full bg-slate-100">
+                    <img src="assets/Faculty/Bhargavi mam.jpg" class="card-image"
+                        onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Bhargavi'">
+                    <div class="absolute bottom-4 left-4">
+                        <span
+                            class="px-4 py-1.5 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">IT
+                            Dept</span>
+                    </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-slate-900 mb-1">T. Bhargavi</h3>
+                        <p class="text-xs font-bold text-gold uppercase tracking-widest mb-6">Assistant Professor</p>
+                        <div class="w-12 h-1 bg-slate-100 mb-6 group-hover:bg-gold transition-colors"></div>
+                    </div>
+                    <div class="space-y-3 text-sm text-slate-600">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">📞</span>
+                            <span class="font-semibold text-slate-900">+91 9052981161</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">✉️</span>
+                            <a href="mailto:tbhargaviit@smec.ac.in"
+                                class="contact-link font-semibold break-all">tbhargaviit@smec.ac.in</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">👤</span>
+                            <span class="font-semibold text-slate-900">Female</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Veeresh -->
+            <div class="faculty-card rounded-3xl overflow-hidden group" data-name="Veeresh" data-aos="fade-up"
+                data-aos-delay="200">
+                <div class="img-container relative h-96 w-full bg-slate-100">
+                    <img src="assets/Faculty/veeresh sir.jpg" class="card-image"
+                        onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Veeresh'">
+                    <div class="absolute bottom-4 left-4">
+                        <span
+                            class="px-4 py-1.5 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">IT
+                            Dept</span>
+                    </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-slate-900 mb-1">Veeresh</h3>
+                        <p class="text-xs font-bold text-gold uppercase tracking-widest mb-6">Assistant Professor</p>
+                        <div class="w-12 h-1 bg-slate-100 mb-6 group-hover:bg-gold transition-colors"></div>
+                    </div>
+                    <div class="space-y-3 text-sm text-slate-600">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">📞</span>
+                            <span class="font-semibold text-slate-900">+91 9912577965</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">✉️</span>
+                            <a href="mailto:sveereshit@smec.ac.in"
+                                class="contact-link font-semibold break-all">sveereshit@smec.ac.in</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">👤</span>
+                            <span class="font-semibold text-slate-900">Male</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- K. Radha -->
+            <div class="faculty-card rounded-3xl overflow-hidden group" data-name="K. Radha" data-aos="fade-up">
+                <div class="img-container relative h-96 w-full bg-slate-100">
+                    <img src="assets/Faculty/Radha mam.png" class="card-image"
+                        onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Radha'">
+                    <div class="absolute bottom-4 left-4">
+                        <span
+                            class="px-4 py-1.5 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">IT
+                            Dept</span>
+                    </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-slate-900 mb-1">K. Radha</h3>
+                        <p class="text-xs font-bold text-gold uppercase tracking-widest mb-6">Assistant Professor</p>
+                        <div class="w-12 h-1 bg-slate-100 mb-6 group-hover:bg-gold transition-colors"></div>
+                    </div>
+                    <div class="space-y-3 text-sm text-slate-600">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">📞</span>
+                            <span class="font-semibold text-slate-900">+91 9866570995</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">✉️</span>
+                            <a href="mailto:kradhait@smec.ac.in"
+                                class="contact-link font-semibold break-all">kradhait@smec.ac.in</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">👤</span>
+                            <span class="font-semibold text-slate-900">Female</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- K. Yadagiri -->
+            <div class="faculty-card rounded-3xl overflow-hidden group" data-name="K. Yadagiri" data-aos="fade-up"
+                data-aos-delay="100">
+                <div class="img-container relative h-96 w-full bg-slate-100">
+                    <img src="assets/Faculty/Yadgeree sir.png" class="card-image"
+                        onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Yadagiri'">
+                    <div class="absolute bottom-4 left-4">
+                        <span
+                            class="px-4 py-1.5 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">IT
+                            Dept</span>
+                    </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-slate-900 mb-1">K. Yadagiri</h3>
+                        <p class="text-xs font-bold text-gold uppercase tracking-widest mb-6">Assistant Professor</p>
+                        <div class="w-12 h-1 bg-slate-100 mb-6 group-hover:bg-gold transition-colors"></div>
+                    </div>
+                    <div class="space-y-3 text-sm text-slate-600">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">📞</span>
+                            <span class="font-semibold text-slate-900">+91 9533126919</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">✉️</span>
+                            <a href="mailto:kyadagiriit@smec.ac.in"
+                                class="contact-link font-semibold break-all">kyadagiriit@smec.ac.in</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">👤</span>
+                            <span class="font-semibold text-slate-900">Male</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- S. Karthik Raj -->
+            <div class="faculty-card rounded-3xl overflow-hidden group" data-name="S. Karthik Raj" data-aos="fade-up"
+                data-aos-delay="200">
+                <div class="img-container relative h-96 w-full bg-slate-100">
+                    <img src="assets/Faculty/Karthik Raj sir.png" class="card-image"
+                        onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Karthik'">
+                    <div class="absolute bottom-4 left-4">
+                        <span
+                            class="px-4 py-1.5 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">IT
+                            Dept</span>
+                    </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-slate-900 mb-1">S. Karthik Raj</h3>
+                        <p class="text-xs font-bold text-gold uppercase tracking-widest mb-6">Assistant Professor</p>
+                        <div class="w-12 h-1 bg-slate-100 mb-6 group-hover:bg-gold transition-colors"></div>
+                    </div>
+                    <div class="space-y-3 text-sm text-slate-600">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">📞</span>
+                            <span class="font-semibold text-gray-400 italic">Not Available</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">✉️</span>
+                            <a href="mailto:skarthikrajit@smec.ac.in"
+                                class="contact-link font-semibold break-all">skarthikrajit@smec.ac.in</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">👤</span>
+                            <span class="font-semibold text-slate-900">Male</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- K. Neelima -->
+            <div class="faculty-card rounded-3xl overflow-hidden group" data-name="K. Neelima" data-aos="fade-up">
+                <div class="img-container relative h-96 w-full bg-slate-100">
+                    <img src="assets/Faculty/Neelima mam.png" class="card-image"
+                        onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Neelima'">
+                    <div class="absolute bottom-4 left-4">
+                        <span
+                            class="px-4 py-1.5 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">IT
+                            Dept</span>
+                    </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-slate-900 mb-1">K. Neelima</h3>
+                        <p class="text-xs font-bold text-gold uppercase tracking-widest mb-6">Assistant Professor</p>
+                        <div class="w-12 h-1 bg-slate-100 mb-6 group-hover:bg-gold transition-colors"></div>
+                    </div>
+                    <div class="space-y-3 text-sm text-slate-600">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">📞</span>
+                            <span class="font-semibold text-slate-900">+91 9290601867</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">✉️</span>
+                            <a href="mailto:kneelimait@smec.ac.in"
+                                class="contact-link font-semibold break-all">kneelimait@smec.ac.in</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">👤</span>
+                            <span class="font-semibold text-slate-900">Female</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maroju Alekhya -->
+            <div class="faculty-card rounded-3xl overflow-hidden group" data-name="Maroju Alekhya" data-aos="fade-up"
+                data-aos-delay="100">
+                <div class="img-container relative h-96 w-full bg-slate-100">
+                    <img src="assets/Faculty/Alekhya mam.jpg" class="card-image"
+                        onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Alekhya'">
+                    <div class="absolute bottom-4 left-4">
+                        <span
+                            class="px-4 py-1.5 bg-orange-600 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">ECE
+                            Dept</span>
+                    </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-slate-900 mb-1">Maroju Alekhya</h3>
+                        <p class="text-xs font-bold text-gold uppercase tracking-widest mb-6">Assistant Professor</p>
+                        <div class="w-12 h-1 bg-slate-100 mb-6 group-hover:bg-gold transition-colors"></div>
+                    </div>
+                    <div class="space-y-3 text-sm text-slate-600">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">📞</span>
+                            <span class="font-semibold text-slate-900">+91 9502091704</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">✉️</span>
+                            <a href="mailto:malekhyaece@smec.ac.in"
+                                class="contact-link font-semibold break-all">malekhyaece@smec.ac.in</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">👤</span>
+                            <span class="font-semibold text-slate-900">Female</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- G. Poshamallu -->
+            <div class="faculty-card rounded-3xl overflow-hidden group" data-name="G. Poshamallu" data-aos="fade-up"
+                data-aos-delay="200">
+                <div class="img-container relative h-96 w-full bg-slate-100">
+                    <img src="assets\Faculty\poshamallu sir.png" class="card-image"
+                        onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=Poshamallu'">
+                    <div class="absolute bottom-4 left-4">
+                        <span
+                            class="px-4 py-1.5 bg-orange-600 text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg">ECE
+                            Dept</span>
+                    </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-slate-900 mb-1">G. Poshamallu</h3>
+                        <p class="text-xs font-bold text-gold uppercase tracking-widest mb-6">Assistant Professor</p>
+                        <div class="w-12 h-1 bg-slate-100 mb-6 group-hover:bg-gold transition-colors"></div>
+                    </div>
+                    <div class="space-y-3 text-sm text-slate-600">
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">📞</span>
+                            <span class="font-semibold text-slate-900">+91 8008943890</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">✉️</span>
+                            <a href="mailto:gposhamalluece@smec.ac.in"
+                                class="contact-link font-semibold break-all">gposhamalluece@smec.ac.in</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-lg">👤</span>
+                            <span class="font-semibold text-slate-900">Male</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer similar to about.html -->
+    <footer class="bg-black text-white py-12 text-center text-sm border-t border-slate-900">
+        <p>Developed with ❤️ by <a href="https://www.linkedin.com/in/mohammedkaif6/" target="_blank"
+                class="text-gold font-bold hover:underline">Mohammed Kaif</a></p>
+        <p class="mt-2 text-xs opacity-60">St. Martin's Engineering College | Department of IT | Class of 2022-26</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script>
+        // Init Animations
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+
+        // Mobile Menu Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            function openMenu() {
+                if (!mobileMenu) return;
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => { mobileMenu.classList.remove('opacity-0'); mobileMenu.classList.add('opacity-100'); }, 10);
+            }
+
+            function closeMenu() {
+                if (!mobileMenu) return;
+                mobileMenu.classList.remove('opacity-100');
+                mobileMenu.classList.add('opacity-0');
+                setTimeout(() => { mobileMenu.classList.add('hidden'); mobileMenu.classList.remove('flex'); document.body.style.overflow = ''; }, 300);
+            }
+
+            if (menuBtn) menuBtn.addEventListener('click', openMenu);
+            if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+        });
+
+        function filterFaculty() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.faculty-card');
+
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name').toLowerCase();
+                if (name.includes(term)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // --- PWA SERVICE WORKER REGISTRATION ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW Registered!', reg))
+                    .catch(err => console.log('SW Registration Failed!', err));
+            });
+        }
+    </script>
+
+    <!-- Mobile Bottom Navigation (Instagram Style) -->
+    <div id="bottom-nav"
+        class="fixed bottom-0 left-0 w-full bg-white/80 backdrop-blur-lg border-t border-slate-200 z-[100] md:hidden px-6 pb-2 shadow-[0_-4px_12px_-2px_rgba(0,0,0,0.05)]">
+        <div class="flex items-center justify-between h-16">
+            <a href="index.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Home</span>
+            </a>
+            <a href="directory.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Students</span>
+            </a>
+            <a href="community.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Chat</span>
+            </a>
+            <a href="faculty.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-gold transition-all duration-300" fill="none" stroke="currentColor"
+                    stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span class="text-[10px] font-bold uppercase tracking-tighter text-gold">Faculty</span>
+            </a>
+            <a href="memories.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">Memories</span>
+            </a>
+            <a href="about.html" class="flex flex-col items-center gap-1 group">
+                <svg class="w-6 h-6 text-slate-400 group-hover:text-gold transition-all duration-300" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span
+                    class="text-[10px] font-bold uppercase tracking-tighter text-slate-400 group-hover:text-gold">About</span>
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>
