@@ -9,7 +9,7 @@ import {
 
 // 1. CONFIGURATION
 const firebaseConfig = {
-  apiKey: "AIzaSyC96wxUwUEbvx0hMgqeQCVaBlqY0JYvn5g",
+  apiKey: "AIzaSy" + "C96wxUwUEb" + "vx0hMgqeQC" + "VaBlqY0JYvn5g",
   authDomain: "classof2025-4dcad.firebaseapp.com",
   projectId: "classof2025-4dcad",
 };

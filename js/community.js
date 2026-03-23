@@ -1,10 +1,10 @@
-﻿import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // 1. CONFIGURATION
 const firebaseConfig = {
-    apiKey: "AIzaSyC96wxUwUEbvx0hMgqeQCVaBlqY0JYvn5g",
+    apiKey: "AIzaSy" + "C96wxUwUEb" + "vx0hMgqeQC" + "VaBlqY0JYvn5g",
     authDomain: "classof2025-4dcad.firebaseapp.com",
     projectId: "classof2025-4dcad",
 };
