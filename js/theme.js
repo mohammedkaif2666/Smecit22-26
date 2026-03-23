@@ -33,15 +33,50 @@
             textColor: '#000000',
             fontSans: "Helvetica, Arial, sans-serif",
             fontSerif: "Helvetica, Arial, sans-serif"
+        },
+        babypink: {
+            primary: '#fff0f5',    // Lavender blush
+            gold: '#ffb6c1',       // Light pink
+            goldLight: '#ffe4e1',
+            maroon: '#db7093',     // Pale violet red
+            surface: '#fff5f8',
+            bodyBg: '#fff0f5',
+            textColor: '#5d3a4a',
+            fontSans: "'Quicksand', 'Nunito', sans-serif",
+            fontSerif: "'Quicksand', 'Nunito', sans-serif"
+        },
+        oceanic: {
+            primary: '#082f49',    // Sky 900
+            gold: '#0ea5e9',       // Sky 500
+            goldLight: '#e0f2fe',
+            maroon: '#0284c7',     // Sky 600
+            surface: '#0c4a6e',
+            bodyBg: '#020617',     // Very dark blue
+            textColor: '#e0f2fe',
+            fontSans: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            fontSerif: "'Georgia', serif"
+        },
+        synthwave: {
+            primary: '#2e0a4f',    // Deep violet
+            gold: '#f9a826',       // Vivid orange/yellow
+            goldLight: '#ffd166',
+            maroon: '#ef476f',     // Vivid pink/red
+            surface: '#1b0636',
+            bodyBg: '#120424',
+            textColor: '#f8f9fa',
+            fontSans: "'Trebuchet MS', sans-serif",
+            fontSerif: "'Trebuchet MS', sans-serif"
         }
     };
 
     const themeKeys = Object.keys(themes);
 
-    // 2. Load or Pick Random (Using session storage so navigating between pages doesn't flash)
+    // 2. Load or Pick Random
+    // Rule: Always randomize if the user is loading/reloading the index.html page!
+    const isIndexPage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '';
     let currentTheme = sessionStorage.getItem('smec_theme');
     
-    if (!currentTheme || !themes[currentTheme]) {
+    if (isIndexPage || !currentTheme || !themes[currentTheme]) {
         currentTheme = themeKeys[Math.floor(Math.random() * themeKeys.length)];
         sessionStorage.setItem('smec_theme', currentTheme);
     }
@@ -86,6 +121,28 @@
             img:hover { filter: grayscale(0%); }
             .text-stroke { -webkit-text-stroke: 1px #000; }
         ` : ''}
+
+        /* Overrides for Baby Pink Theme */
+        ${currentTheme === 'babypink' ? `
+            .glass { background: rgba(255, 240, 245, 0.9) !important; border-bottom: 2px dashed #ffb6c1 !important; box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4) !important; }
+            .card-shadow { background: #fff5f8 !important; border: 2px solid #ffe4e1 !important; border-radius: 2rem !important; }
+            * { transition: all 0.4s ease-in-out; }
+        ` : ''}
+
+        /* Overrides for Oceanic Theme */
+        ${currentTheme === 'oceanic' ? `
+            .glass { background: rgba(8, 47, 73, 0.85) !important; border-bottom: 2px solid #0ea5e9 !important; }
+            .card-shadow { background: #0c4a6e !important; border: 1px solid #0284c7 !important; border-radius: 1.5rem !important; }
+            img { filter: drop-shadow(0 0 10px rgba(14,165,233,0.3)); }
+        ` : ''}
+
+        /* Overrides for Synthwave Theme */
+        ${currentTheme === 'synthwave' ? `
+            .glass { background: rgba(46, 10, 79, 0.85) !important; border-bottom: 2px solid #ef476f !important; }
+            .card-shadow { background: #1b0636 !important; border: 2px solid #f9a826 !important; box-shadow: 4px 4px 0px #ef476f !important; }
+            h1, h2, h3 { text-shadow: 2px 2px 0px #ef476f, -1px -1px 0px #0bd3d3; }
+            .text-gold { color: #f9a826 !important; text-shadow: 0 0 8px rgba(249,168,38,0.8); }
+        ` : ''}
     `;
     document.head.appendChild(style);
 
@@ -100,11 +157,11 @@
                     'gold-light': 'var(--theme-gold-light)',
                     'maroon': 'var(--theme-maroon)',
                     'surface': 'var(--theme-surface)',
-                    // Magic override: Invert slate colors for Cyberpunk/Dark Themes automatically!
-                    ...(currentTheme === 'cyberpunk' ? {
+                    // Magic override: Invert slate colors for Dark Themes automatically!
+                    ...(['cyberpunk', 'oceanic', 'synthwave'].includes(currentTheme) ? {
                         slate: {
                             50: '#18181b',  // Normally lightest, now darkest
-                            100: '#18181b', // Navbar background
+                            100: '#18181b', 
                             200: '#27272a',
                             300: '#3f3f46',
                             400: '#52525b',
