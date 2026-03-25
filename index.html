@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
 <head>
@@ -150,61 +150,38 @@
 
 <body class="antialiased selection:bg-gold selection:text-white">
 
-    <!-- Welcome Popup Modal -->
-    <div id="welcome-modal" class="fixed inset-0 z-[200] hidden items-center justify-center px-4">
-        <div id="modal-backdrop" class="absolute inset-0 bg-slate-950 opacity-0"></div>
-        <div id="modal-card"
-            class="relative bg-white p-8 md:p-12 rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] max-w-lg w-full text-center scale-90 opacity-0 transform-gpu">
-            <!-- Close Button (X) -->
-            <button id="x-close"
-                class="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-900 transition-colors z-20">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                    </path>
-                </svg>
-            </button>
-
-            <!-- Decorative Elements -->
-            <div
-                class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-gold via-maroon to-gold rounded-t-[2.5rem]">
-            </div>
-            <div class="absolute -top-24 -right-24 w-48 h-48 bg-gold/10 rounded-full blur-3xl"></div>
-            <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-maroon/10 rounded-full blur-3xl"></div>
-
-            <div class="relative z-10">
-                <div class="mb-6 inline-flex p-4 bg-slate-900 rounded-2xl shadow-lg shadow-slate-900/20 rotate-3">
-                    <span id="greeting-icon" class="text-3xl">✨</span>
+    <!-- Door Loading Animation -->
+    <div id="door-loader" class="fixed inset-0 z-[300] flex pointer-events-auto">
+        <!-- Left Door (Increased Blur to 80px and darkened slightly based on feedback) -->
+        <div id="door-left" class="w-1/2 h-full bg-[#0A2A22]/85 backdrop-blur-[80px] transition-transform duration-[2500ms] ease-[cubic-bezier(0.76,0,0.24,1)] flex items-center justify-end overflow-hidden">
+            <div class="absolute w-[100vw] left-0 h-full bg-[radial-gradient(circle_at_center,_rgba(240,215,255,0.05)_0%,_transparent_60%)]"></div>
+        </div>
+        <!-- Right Door -->
+        <div id="door-right" class="w-1/2 h-full bg-[#0A2A22]/85 backdrop-blur-[80px] transition-transform duration-[2500ms] ease-[cubic-bezier(0.76,0,0.24,1)] flex items-center justify-start overflow-hidden">
+        </div>
+        
+        <!-- Center Content -->
+        <div id="loader-content" class="absolute inset-0 flex flex-col items-center justify-center z-10 transition-opacity duration-700 ease-out">
+            <div class="text-center flex flex-col items-center w-full px-4">
+                <span class="text-6xl md:text-8xl lg:text-9xl font-serif text-[#FFFFEB] mb-6 tracking-tight drop-shadow-2xl flex items-center justify-center gap-2">
+                    Hello, Visitor.
+                    <span class="inline-block origin-bottom-right animate-pulse text-5xl md:text-7xl">👋</span>
+                </span>
+                <span class="text-xl md:text-3xl font-serif text-[#F0D7FF] mb-4 drop-shadow-lg">Welcome to the world of</span>
+                <span class="text-sm md:text-xl text-[#FFFFEB]/80 tracking-[0.4em] uppercase font-bold mb-12 drop-shadow-md">IT Dept • C Section</span>
+                
+                <!-- Loading Spinner -->
+                <div class="relative w-12 h-12 md:w-16 md:h-16 mt-4 mb-8">
+                    <svg class="animate-spin w-full h-full text-[#F0D7FF]/30" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-30" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                        <path class="opacity-100 fill-[#F0D7FF]" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
                 </div>
-
-                <h2 id="greeting-text"
-                    class="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-4 leading-tight">
-                    Good Morning!
-                </h2>
-
-                <div class="w-12 h-[2px] bg-gold/30 mx-auto mb-6"></div>
-
-                <p id="greeting-quote" class="text-lg md:text-xl text-slate-600 font-serif italic leading-relaxed mb-8">
-                    "Technology is best when it brings people together."
-                </p>
-
-                <p class="text-[10px] uppercase tracking-[0.2em] font-bold text-gold mb-8">
-                    St. Martin's IT • Class of 2022-26
-                </p>
-
-                <button id="close-welcome"
-                    class="group relative px-10 py-4 bg-slate-900 text-white font-bold rounded-full overflow-hidden transition-all hover:shadow-2xl hover:shadow-slate-900/30 hover:-translate-y-1">
-                    <span class="relative z-10 flex items-center justify-center gap-2">
-                        Get Started
-                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                        </svg>
-                    </span>
-                    <div
-                        class="absolute inset-0 bg-gradient-to-r from-slate-800 to-slate-900 opacity-0 group-hover:opacity-100 transition-opacity">
-                    </div>
-                </button>
+                
+                <!-- Typewriter Quote -->
+                <div class="h-auto min-h-[4rem] w-full max-w-6xl px-4 flex items-center justify-center">
+                    <p id="loader-quote" class="text-xl md:text-3xl lg:text-4xl font-serif text-[#FFFFEB] italic tracking-wide text-center drop-shadow-lg whitespace-normal leading-relaxed"></p>
+                </div>
             </div>
         </div>
     </div>
@@ -283,30 +260,35 @@
     <!-- Hero Section (Responsive Height) -->
     <!-- Increased pt-28 to ensure content starts below the fixed glass navbar -->
     <header class="relative w-full min-h-screen flex items-center justify-center pt-28 pb-12">
-        <!-- Background Image with Overlay -->
-        <div class="absolute inset-0 z-0 overflow-hidden">
-            <img src="assets/college.png" alt="SMEC Campus" class="w-full h-full object-cover animate-ken-burns"
-                id="hero-image" fetchpriority="high" loading="eager">
-            <div class="absolute inset-0 bg-white/70 backdrop-blur-[1px]"></div>
-            <!-- Pattern Overlay -->
-            <div class="absolute inset-0 bg-[radial-gradient(circle,_rgba(15,23,42,0.12)_1px,_transparent_1px)] [background-size:18px_18px] opacity-40"></div>
+        <!-- Minimalist Wispr Background with College Image & Parallax -->
+        <div class="absolute inset-0 z-0 bg-[#FFFFEB] overflow-hidden">
+            <!-- Background Image moves slower (pushed back in 3D space) -->
+            <div class="absolute inset-0 w-full h-full" data-parallax="0.25">
+                <img src="assets/college.png" alt="SMEC Campus" class="w-full h-full object-cover animate-ken-burns scale-110 origin-top" id="hero-image" fetchpriority="high" loading="eager">
+            </div>
+            
+            <div class="absolute inset-0 bg-[#FFFFEB]/70 backdrop-blur-[1px]"></div>
+            
+            <!-- Floating Elements move faster (floating in front space) -->
+            <div class="absolute top-20 left-10 md:left-20 w-24 h-24 bg-[#F0D7FF]/80 rounded-full blur-xl animate-pulse-slow" data-parallax="-0.2"></div>
+            <div class="absolute bottom-40 right-10 md:right-32 w-48 h-48 bg-[#c791e8]/30 rounded-full blur-3xl animate-pulse-slow delay-1000" data-parallax="-0.4"></div>
+            <div class="absolute top-1/2 left-2/3 w-32 h-32 bg-[#0A2A22]/15 rounded-full blur-2xl animate-pulse-slow delay-500" data-parallax="-0.15"></div>
+            
+            <div class="absolute inset-0 bg-[radial-gradient(circle,_rgba(26,26,26,0.03)_1px,_transparent_1px)] [background-size:24px_24px]"></div>
         </div>
 
         <div class="relative z-10 text-center px-4 w-full max-w-6xl mx-auto mt-4 md:mt-0" data-aos="fade-up"
             data-aos-duration="1200">
-            <div class="flex justify-center items-center gap-4 mb-4 opacity-0 translate-y-4 hero-sub">
-                <span class="h-[1px] w-8 md:w-12 bg-slate-900"></span>
-                <p class="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] text-slate-900">UGC
-                    Autonomous • NAAC A+</p>
-                <span class="h-[1px] w-8 md:w-12 bg-slate-900"></span>
+            <div class="flex justify-center items-center mb-6 opacity-0 translate-y-4 hero-sub">
+                <span class="px-4 py-1.5 border border-[#1A1A1A]/20 rounded-full text-[10px] md:text-xs font-semibold text-[#808080] tracking-widest uppercase bg-white/50 backdrop-blur-sm">UGC Autonomous • NAAC A+</span>
             </div>
 
-            <h1 class="font-serif font-bold leading-none tracking-tight mb-6 md:mb-8">
-                <span class="block text-4xl md:text-6xl lg:text-7xl xl:text-8xl text-slate-900 mb-2 md:mb-4">ST.
-                    MARTIN'S</span>
-                <span
-                    class="block text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-gold drop-shadow-sm mb-2 md:mb-4">ENGINEERING</span>
-                <span class="block text-4xl md:text-6xl lg:text-7xl xl:text-8xl text-slate-900">COLLEGE</span>
+            <h1 class="font-serif font-bold leading-tight tracking-tight mb-8">
+                <span class="block text-5xl md:text-7xl lg:text-8xl xl:text-[8rem] text-[#1A1A1A]">St. Martin's</span>
+                <span class="block text-5xl md:text-7xl lg:text-8xl xl:text-[8rem] text-[#1A1A1A]">Engineering</span>
+                <span class="block text-5xl md:text-7xl lg:text-8xl xl:text-[8rem] text-[#1A1A1A] relative inline-block">
+                    College<svg class="absolute w-full h-3 md:h-5 -bottom-2 md:-bottom-4 left-0 text-[#FF7A59] opacity-80" viewBox="0 0 100 20" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><path d="M0,10 Q50,20 100,5" /></svg>
+                </span>
             </h1>
 
             <p
@@ -337,53 +319,53 @@
         </div>
     </header>
 
-    <!-- Philosophy Section -->
-    <section id="philosophy" class="w-full min-h-screen flex items-center justify-center px-6 py-24 relative">
-        <div class="max-w-6xl text-center relative z-10">
+    <!-- Philosophy Section (Wispr Flow style dark bubble) -->
+    <div class="w-full px-4 md:px-8 py-12 bg-[#FFFFEB]">
+    <section id="philosophy" class="w-full bg-[#0A2A22] text-[#FFFFEB] rounded-[60px] min-h-[90vh] flex items-center justify-center px-6 py-24 relative overflow-hidden shadow-2xl">
+        <div class="max-w-6xl text-center relative z-10 w-full">
             <div class="mb-12" data-aos="fade-down"><span
-                    class="text-xs font-bold uppercase tracking-[0.3em] text-gold border px-3 py-1 rounded-full border-gold">01.
-                    The Purpose</span></div>
+                    class="text-xs font-bold tracking-widest text-[#F0D7FF] bg-[#F0D7FF]/10 px-4 py-2 rounded-[12px] border border-[#F0D7FF]/20">01. The Purpose</span></div>
 
-            <h2 class="text-4xl md:text-6xl font-serif leading-tight mb-16 text-slate-900" data-aos="fade-up">
+            <h2 class="text-5xl md:text-7xl font-serif leading-tight mb-16 text-[#FFFFEB]" data-aos="fade-up">
                 Why does this exist?<br>
-                <span class="text-slate-500 italic text-2xl md:text-4xl block mt-4 font-light">"Because paper fades, but
+                <span class="text-[#FFFFEB]/60 italic text-3xl md:text-5xl block mt-6 font-light">"Because paper fades, but
                     data is forever."</span>
             </h2>
 
             <!-- Mobile: Stacked, Desktop: Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-left mt-16">
                 <!-- Card 1 -->
-                <div class="card-shadow p-8 rounded-2xl group hover:-translate-y-2" data-aos="fade-up"
-                    data-aos-delay="0" data-tilt>
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[40px] group hover:-translate-y-4 hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.3)] hover:bg-white/10 transition-all duration-500" data-aos="fade-up"
+                    data-aos-delay="0" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
                     <div
-                        class="text-4xl mb-6 bg-slate-50 w-16 h-16 flex items-center justify-center rounded-full text-gold group-hover:bg-gold group-hover:text-white transition-colors shadow-sm">
+                        class="text-4xl mb-6 bg-[#FFFFEB]/10 w-16 h-16 flex items-center justify-center rounded-full text-[#F0D7FF] shadow-sm">
                         💡</div>
-                    <h3 class="text-xl font-bold mb-4 font-serif text-slate-900">The What</h3>
-                    <p class="text-slate-600 leading-relaxed text-sm">A digital sanctuary for 69 students & faculty
+                    <h3 class="text-2xl font-bold mb-4 font-serif text-[#FFFFEB]">The What</h3>
+                    <p class="text-[#FFFFEB]/70 leading-relaxed text-base">A digital sanctuary for 69 students & faculty
                         members. It's not just a list of names; it's a collection of 4 years of struggle, success, and
                         Journey.</p>
                 </div>
 
                 <!-- Card 2 -->
-                <div class="card-shadow p-8 rounded-2xl group hover:-translate-y-2" data-aos="fade-up"
-                    data-aos-delay="100" data-tilt>
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[40px] group hover:-translate-y-4 hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.3)] hover:bg-white/10 transition-all duration-500" data-aos="fade-up"
+                    data-aos-delay="100" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
                     <div
-                        class="text-4xl mb-6 bg-slate-50 w-16 h-16 flex items-center justify-center rounded-full text-gold group-hover:bg-gold group-hover:text-white transition-colors shadow-sm">
+                        class="text-4xl mb-6 bg-[#FFFFEB]/10 w-16 h-16 flex items-center justify-center rounded-full text-[#F0D7FF] shadow-sm">
                         ⚡</div>
-                    <h3 class="text-xl font-bold mb-4 font-serif text-slate-900">The How</h3>
-                    <p class="text-slate-600 leading-relaxed text-sm">Built on a modern stack, powered by Firebase, and
+                    <h3 class="text-2xl font-bold mb-4 font-serif text-[#FFFFEB]">The How</h3>
+                    <p class="text-[#FFFFEB]/70 leading-relaxed text-base">Built on a modern stack, powered by Firebase, and
                         crafted with love. Every profile is user-generated, ensuring that your story is told exactly how
                         you want it to be told.</p>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="card-shadow p-8 rounded-2xl group hover:-translate-y-2" data-aos="fade-up"
-                    data-aos-delay="200" data-tilt>
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[40px] group hover:-translate-y-4 hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.3)] hover:bg-white/10 transition-all duration-500" data-aos="fade-up"
+                    data-aos-delay="200" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
                     <div
-                        class="text-4xl mb-6 bg-slate-50 w-16 h-16 flex items-center justify-center rounded-full text-gold group-hover:bg-gold group-hover:text-white transition-colors shadow-sm">
+                        class="text-4xl mb-6 bg-[#FFFFEB]/10 w-16 h-16 flex items-center justify-center rounded-full text-[#F0D7FF] shadow-sm">
                         🚀</div>
-                    <h3 class="text-xl font-bold mb-4 font-serif text-slate-900">The Why</h3>
-                    <p class="text-slate-600 leading-relaxed text-sm">To freeze time. As we step out of College and
+                    <h3 class="text-2xl font-bold mb-4 font-serif text-[#FFFFEB]">The Why</h3>
+                    <p class="text-[#FFFFEB]/70 leading-relaxed text-base">To freeze time. As we step out of College and
                         into the corporate world, this link will remain the one place we can all return to, anytime,
                         anywhere.</p>
                 </div>
@@ -391,11 +373,12 @@
 
             <div class="mt-20" data-aos="zoom-in">
                 <a href="about.html"
-                    class="inline-block px-10 py-4 border border-slate-900 text-slate-900 font-bold uppercase tracking-widest text-xs hover:bg-slate-900 hover:text-white transition-all rounded-full shadow-lg">Discover
-                    Our Roots →</a>
+                    class="inline-block px-10 py-4 bg-[#F0D7FF] border-[1.6px] border-[#1A1A1A] text-[#1A1A1A] font-bold text-sm hover:scale-105 hover:bg-[#e6c2fb] transition-all rounded-[12px] shadow-sm">Discover
+                    Our Roots</a>
             </div>
         </div>
     </section>
+    </div>
 
     <!-- Memories Section -->
     <section id="memories"
@@ -498,7 +481,7 @@
 
     <!-- Footer similar to about.html -->
     <footer class="bg-black text-white py-12 text-center text-sm border-t border-slate-900">
-        <p>Developed with â¤ï¸ by <a href="https://www.linkedin.com/in/mohammedkaif6/" target="_blank"
+        <p>Developed with <span class="text-red-500">&hearts;</span> by <a href="https://www.linkedin.com/in/mohammedkaif6/" target="_blank"
                 class="text-gold font-bold hover:underline">Mohammed Kaif</a></p>
         <p class="mt-2 text-xs opacity-60">St. Martin's Engineering College | Department of IT | Class of 2022-26</p>
     </footer>
@@ -570,38 +553,20 @@
             });
         };
 
-        // --- WELCOME POPUP LOGIC ---
-        const initWelcomePopup = () => {
-            const modal = document.getElementById('welcome-modal');
-            const backdrop = document.getElementById('modal-backdrop');
-            const card = document.getElementById('modal-card');
-            const closeBtn = document.getElementById('close-welcome');
-            const greetingText = document.getElementById('greeting-text');
-            const greetingIcon = document.getElementById('greeting-icon');
-            const greetingQuote = document.getElementById('greeting-quote');
+        // --- DOOR LOADING ANIMATION LOGIC ---
+        const initDoorLoader = () => {
+            const loader = document.getElementById('door-loader');
+            const leftDoor = document.getElementById('door-left');
+            const rightDoor = document.getElementById('door-right');
+            const content = document.getElementById('loader-content');
+            const quoteEl = document.getElementById('loader-quote');
+            
+            if (!loader) return;
 
-            if (!modal || !card) return;
+            // Lock scroll
+            document.body.style.overflow = 'hidden';
 
-            // 1. Determine Time-based Greeting
-            const hour = new Date().getHours();
-            let greeting = "Good Evening!";
-            let icon = "✨";
-
-            if (hour >= 5 && hour < 12) {
-                greeting = "Good Morning!";
-                icon = "â˜€ï¸";
-            } else if (hour >= 12 && hour < 17) {
-                greeting = "Good Afternoon!";
-                icon = "🌍¤ï¸";
-            } else if (hour >= 17 && hour < 21) {
-                greeting = "Good Evening!";
-                icon = "🌆";
-            } else {
-                greeting = "Good Night!";
-                icon = "🌙";
-            }
-
-            // 2. Technical/Inspirational Quotations
+            // Quotes Database
             const quotes = [
                 "\"Technology is best when it brings people together.\"",
                 "\"The best way to predict the future is to create it.\"",
@@ -652,49 +617,52 @@
                 "\"Make today count.\"",
                 "\"Great minds don’t think alike — they think together.\""
             ];
-            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
-            // 3. Update DOM
-            greetingText.innerText = greeting;
-            greetingIcon.innerText = icon;
-            greetingQuote.innerText = randomQuote;
+            // Typewriter Effect & Dynamic Timing Sequence
+            if (quoteEl) {
+                const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                let i = 0;
+                quoteEl.innerHTML = '<span id="typing-text"></span><span class="inline-block w-1.5 h-6 md:h-8 lg:h-10 ml-2 bg-[#F0D7FF] animate-pulse"></span>';
+                const textSpan = document.getElementById('typing-text');
+                
+                const triggerDoorOpening = () => {
+                    // 1. Fade out center content smoothly
+                    if (content) content.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        // 2. Open doors smoothly
+                        if (leftDoor) leftDoor.style.transform = 'translateX(-100%)';
+                        if (rightDoor) rightDoor.style.transform = 'translateX(100%)';
+                        
+                        // 3. Remove loader and unlock scroll globally
+                        setTimeout(() => {
+                            loader.style.pointerEvents = 'none';
+                            loader.style.display = 'none';
+                            document.body.style.overflow = '';
+                        }, 2500); // match transition exact duration
+                    }, 800); // wait explicitly for text to fade
+                };
 
-            // 4. Entrance Animation & Scroll Lock
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.body.style.overflow = 'hidden';
-
-            const tl = gsap.timeline({ delay: 0.8 });
-            tl.to(backdrop, { opacity: 1, duration: 1, ease: "power2.out" })
-                .to(card, { opacity: 1, scale: 1, duration: 1.2, ease: "expo.out" }, "-=0.6")
-                .from(card.children[3].children, { y: 20, opacity: 0, stagger: 0.1, duration: 0.8, ease: "power2.out" }, "-=0.8");
-
-            // 5. Close Logic
-            const closeModal = () => {
-                gsap.to(card, { scale: 0.9, opacity: 0, duration: 0.5, ease: "power2.in" });
-                gsap.to(backdrop, {
-                    opacity: 0, duration: 0.5, ease: "power2.in", onComplete: () => {
-                        modal.classList.add('hidden');
-                        modal.classList.remove('flex');
-                        document.body.style.overflow = '';
+                const typeWriter = () => {
+                    if (i < randomQuote.length && textSpan) {
+                        textSpan.innerHTML += randomQuote.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 35); // solid 35ms per character reading speed
+                    } else {
+                        // Typing is completely done, hold the frame for exactly 1.2 seconds!
+                        setTimeout(triggerDoorOpening, 1200); 
                     }
-                });
-            };
-
-            closeBtn.addEventListener('click', closeModal);
-            document.getElementById('x-close').addEventListener('click', closeModal);
-            backdrop.addEventListener('click', closeModal);
+                };
+                setTimeout(typeWriter, 400); // Start typing 400ms after component mounts
+            }
         };
 
         // Run marquee setup slightly delayed to ensure DOM is fully ready
         setTimeout(() => {
             setupMarquee();
 
-            // Show welcome popup only once per session
-            if (!sessionStorage.getItem('welcome_popup_shown')) {
-                initWelcomePopup();
-                sessionStorage.setItem('welcome_popup_shown', 'true');
-            }
+            // Always show door loader on homepage visit
+            initDoorLoader();
         }, 100);
 
         // --- PWA SERVICE WORKER REGISTRATION ---

@@ -1,195 +1,438 @@
 (function() {
-    // 1. Define Multivariate Themes
-    const themes = {
-        classic: {
-            primary: '#0f172a',
-            gold: '#d4af37',
-            goldLight: '#f3e5ab',
-            maroon: '#800000',
-            surface: '#ffffff',
-            bodyBg: '#fafafa',
-            textColor: '#1e293b',
-            fontSans: "'Inter', sans-serif",
-            fontSerif: "'Playfair Display', serif"
-        },
-        cyberpunk: {
-            primary: '#09090b',    // super dark
-            gold: '#00ff9f',       // neon green
-            goldLight: '#d1ffeb',
-            maroon: '#f62e97',     // neon pink
-            surface: '#18181b',    // dark surface
-            bodyBg: '#050505',
-            textColor: '#e4e4e7',
-            fontSans: "'Courier New', monospace",
-            fontSerif: "'Courier New', monospace"
-        },
-        minimalist: {
-            primary: '#ffffff',
-            gold: '#000000',       // pure black accents
-            goldLight: '#eeeeee',
-            maroon: '#333333',
-            surface: '#ffffff',
-            bodyBg: '#ffffff',
-            textColor: '#000000',
-            fontSans: "Helvetica, Arial, sans-serif",
-            fontSerif: "Helvetica, Arial, sans-serif"
-        },
-        babypink: {
-            primary: '#fff0f5',    // Lavender blush
-            gold: '#ffb6c1',       // Light pink
-            goldLight: '#ffe4e1',
-            maroon: '#db7093',     // Pale violet red
-            surface: '#fff5f8',
-            bodyBg: '#fff0f5',
-            textColor: '#5d3a4a',
-            fontSans: "'Quicksand', 'Nunito', sans-serif",
-            fontSerif: "'Quicksand', 'Nunito', sans-serif"
-        },
-        oceanic: {
-            primary: '#082f49',    // Sky 900
-            gold: '#0ea5e9',       // Sky 500
-            goldLight: '#e0f2fe',
-            maroon: '#0284c7',     // Sky 600
-            surface: '#0c4a6e',
-            bodyBg: '#020617',     // Very dark blue
-            textColor: '#e0f2fe',
-            fontSans: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-            fontSerif: "'Georgia', serif"
-        },
-        synthwave: {
-            primary: '#2e0a4f',    // Deep violet
-            gold: '#f9a826',       // Vivid orange/yellow
-            goldLight: '#ffd166',
-            maroon: '#ef476f',     // Vivid pink/red
-            surface: '#1b0636',
-            bodyBg: '#120424',
-            textColor: '#f8f9fa',
-            fontSans: "'Trebuchet MS', sans-serif",
-            fontSerif: "'Trebuchet MS', sans-serif"
-        }
+    // 1. Fixed Wispr Flow Design System
+    const theme = {
+        cream: '#FFFFEB',
+        forest: '#0A2A22',
+        lavender: '#F0D7FF',
+        charcoal: '#1A1A1A',
+        lightGray: '#808080',
+        coral: '#FF7A59'
     };
 
-    const themeKeys = Object.keys(themes);
+    // 2. Inject Google Fonts (Figtree & EB Garamond)
+    const fontLink = document.createElement('link');
+    fontLink.href = 'https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap';
+    fontLink.rel = 'stylesheet';
+    document.head.appendChild(fontLink);
 
-    // 2. Load or Pick Random
-    // Rule: Always randomize if the user is loading/reloading the index.html page!
-    const isIndexPage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '';
-    let currentTheme = sessionStorage.getItem('smec_theme');
-    
-    if (isIndexPage || !currentTheme || !themes[currentTheme]) {
-        currentTheme = themeKeys[Math.floor(Math.random() * themeKeys.length)];
-        sessionStorage.setItem('smec_theme', currentTheme);
-    }
-
-    const t = themes[currentTheme];
-
-    // 3. Inject CSS Variables & Theme Specific Overrides
+    // 3. Inject Global CSS Styles 
     const style = document.createElement('style');
     style.innerHTML = `
         :root {
-            --theme-primary: ${t.primary};
-            --theme-gold: ${t.gold};
-            --theme-gold-light: ${t.goldLight};
-            --theme-maroon: ${t.maroon};
-            --theme-surface: ${t.surface};
-            --theme-bg: ${t.bodyBg};
-            --theme-text: ${t.textColor};
-            --theme-font-sans: ${t.fontSans};
-            --theme-font-serif: ${t.fontSerif};
+            --color-cream: ` + theme.cream + `;
+            --color-forest: ` + theme.forest + `;
+            --color-lavender: ` + theme.lavender + `;
+            --color-charcoal: ` + theme.charcoal + `;
         }
+        
         body {
-            background-color: var(--theme-bg) !important;
-            color: var(--theme-text) !important;
-            font-family: var(--theme-font-sans) !important;
+            background-color: var(--color-cream) !important;
+            color: var(--color-charcoal) !important;
+            font-family: 'Figtree', sans-serif !important;
             transition: background-color 0.5s ease;
         }
+
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: 'EB Garamond', serif !important;
+        }
+
+        /* Glassmorphism Navbar */
+        .glass { 
+            background: rgba(255, 255, 235, 0.85) !important; 
+            backdrop-filter: blur(16px) !important;
+            border-bottom: 1px solid rgba(26,26,26,0.05) !important; 
+            box-shadow: none !important;
+        }
+
+        /* Wispr Flow Buttons */
+        .rounded-full.bg-slate-900.text-white, a.bg-slate-900, button.bg-slate-900, #install-pwa-btn, #close-welcome, .bg-gold, #close-greeting, .bg-slate-800 {
+            background-color: var(--color-lavender) !important;
+            color: var(--color-charcoal) !important;
+            border: 1.6px solid var(--color-charcoal) !important;
+            border-radius: 12px !important;
+            font-family: 'Figtree', sans-serif !important;
+            font-weight: 600 !important;
+            box-shadow: none !important;
+            transition: transform 0.2s ease, background-color 0.2s ease !important;
+        }
+        .rounded-full.bg-slate-900.text-white:hover, a.bg-slate-900:hover, button.bg-slate-900:hover, #install-pwa-btn:hover, #close-welcome:hover, .bg-gold:hover, .bg-slate-800:hover {
+            background-color: #e6c2fb !important;
+            transform: scale(1.02) !important;
+        }
         
-        /* Overrides for Cyberpunk Theme */
-        ${currentTheme === 'cyberpunk' ? `
-            .glass { background: rgba(24, 24, 27, 0.8) !important; border-bottom: 1px solid #00ff9f !important; }
-            .card-shadow { background: #18181b !important; border: 1px solid #3f3f46 !important; }
-            h1, h2, h3, .text-gold { text-shadow: 0 0 8px rgba(0,255,159,0.4); }
-            img { filter: saturate(1.5) contrast(1.1); border: 1px solid #f62e97; }
-        ` : ''}
+        /* Secondary Buttons / Outlined */
+        a.border-slate-900, .bg-transparent.border-slate-900, .border-gold {
+            background-color: transparent !important;
+            color: var(--color-charcoal) !important;
+            border: 1.6px solid var(--color-charcoal) !important;
+            border-radius: 12px !important;
+            font-family: 'Figtree', sans-serif !important;
+            font-weight: 600 !important;
+        }
         
-        /* Overrides for Minimalist / Brutalist Theme */
-        ${currentTheme === 'minimalist' ? `
-            .glass { background: rgba(255, 255, 255, 0.95) !important; border-bottom: 2px solid #000 !important; }
-            .card-shadow { background: #fff !important; border: 2px solid #000 !important; box-shadow: 8px 8px 0px #000 !important; border-radius: 0 !important; }
-            .rounded-2xl, .rounded-full, .rounded-xl, .rounded-[2.5rem] { border-radius: 0 !important; }
-            img { filter: grayscale(100%); transition: filter 0.3s; }
-            img:hover { filter: grayscale(0%); }
-            .text-stroke { -webkit-text-stroke: 1px #000; }
-        ` : ''}
+        /* Shapes (Rounded Containers) */
+        .rounded-2xl, .rounded-[2.5rem], .rounded-3xl {
+            border-radius: 40px !important;
+        }
+        .card-shadow {
+            background: #ffffff !important;
+            border: 1px solid rgba(26,26,26,0.05) !important;
+            border-radius: 40px !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03) !important;
+            transition: all 0.3s ease !important;
+        }
+        .card-shadow:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08) !important;
+            transform: translateY(-5px) !important;
+        }
 
-        /* Overrides for Baby Pink Theme */
-        ${currentTheme === 'babypink' ? `
-            .glass { background: rgba(255, 240, 245, 0.9) !important; border-bottom: 2px dashed #ffb6c1 !important; box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4) !important; }
-            .card-shadow { background: #fff5f8 !important; border: 2px solid #ffe4e1 !important; border-radius: 2rem !important; }
-            * { transition: all 0.4s ease-in-out; }
-        ` : ''}
+        /* Welcome & Greeting Popup Modifications */
+        #modal-card, #greeting-card {
+            background: var(--color-cream) !important;
+            border: 1px solid rgba(26,26,26,0.1) !important;
+        }
+        .bg-gradient-to-r.from-gold.via-maroon.to-gold {
+            background: var(--color-charcoal) !important;
+        }
+        .bg-slate-900 {
+            background-color: var(--color-charcoal) !important;
+            color: var(--color-cream) !important;
+        }
+        
+        /* Legacy colors mapping to charcoal/cream */
+        .text-slate-900, .text-slate-800, .text-gold { color: var(--color-charcoal) !important; }
+        .text-slate-600, .text-slate-500 { color: #808080 !important; }
 
-        /* Overrides for Oceanic Theme */
-        ${currentTheme === 'oceanic' ? `
-            .glass { background: rgba(8, 47, 73, 0.85) !important; border-bottom: 2px solid #0ea5e9 !important; }
-            .card-shadow { background: #0c4a6e !important; border: 1px solid #0284c7 !important; border-radius: 1.5rem !important; }
-            img { filter: drop-shadow(0 0 10px rgba(14,165,233,0.3)); }
-        ` : ''}
+        /* Dark Background Text Overrides to guarantee visibility everywhere */
+        .bg-black .text-gold, .bg-slate-900 .text-gold, .bg-slate-950 .text-gold {
+            color: var(--color-lavender) !important;
+        }
+        .bg-black .text-slate-900, .bg-slate-900 .text-slate-900, .bg-slate-950 .text-slate-900,
+        .bg-black .text-slate-800, .bg-slate-900 .text-slate-800, .bg-slate-950 .text-slate-800 {
+            color: var(--color-cream) !important;
+        }
+        .bg-black .text-slate-600, .bg-slate-900 .text-slate-600, .bg-slate-950 .text-slate-600,
+        .bg-black .text-slate-500, .bg-slate-900 .text-slate-500, .bg-slate-950 .text-slate-500 {
+            color: rgba(255, 255, 235, 0.7) !important;
+        }
 
-        /* Overrides for Synthwave Theme */
-        ${currentTheme === 'synthwave' ? `
-            .glass { background: rgba(46, 10, 79, 0.85) !important; border-bottom: 2px solid #ef476f !important; }
-            .card-shadow { background: #1b0636 !important; border: 2px solid #f9a826 !important; box-shadow: 4px 4px 0px #ef476f !important; }
-            h1, h2, h3 { text-shadow: 2px 2px 0px #ef476f, -1px -1px 0px #0bd3d3; }
-            .text-gold { color: #f9a826 !important; text-shadow: 0 0 8px rgba(249,168,38,0.8); }
-        ` : ''}
+        /* Remove marquee mask to keep it super clean */
+        .mask-gradient {
+            mask-image: none !important;
+            -webkit-mask-image: none !important;
+        }
+        .marquee-col img {
+            border-radius: 20px !important;
+            border: 1px solid rgba(26,26,26,0.1) !important;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05) !important;
+        }
+
+        /* Disable text stroke */
+        .text-stroke { -webkit-text-stroke: 0px !important; }
     `;
     document.head.appendChild(style);
 
-    // 4. Inject Tailwind Config Map
+    // 4. Clear Randomized Theme logic and Set Tailwind Config 
+    sessionStorage.removeItem('smec_theme');
+    
     window.tailwind = window.tailwind || {};
     window.tailwind.config = {
         theme: {
             extend: {
                 colors: {
-                    'primary': 'var(--theme-primary)',
-                    'gold': 'var(--theme-gold)',
-                    'gold-light': 'var(--theme-gold-light)',
-                    'maroon': 'var(--theme-maroon)',
-                    'surface': 'var(--theme-surface)',
-                    // Magic override: Invert slate colors for Dark Themes automatically!
-                    ...(['cyberpunk', 'oceanic', 'synthwave'].includes(currentTheme) ? {
-                        slate: {
-                            50: '#18181b',  // Normally lightest, now darkest
-                            100: '#18181b', 
-                            200: '#27272a',
-                            300: '#3f3f46',
-                            400: '#52525b',
-                            500: '#71717a',
-                            600: '#a1a1aa',
-                            700: '#d4d4d8',
-                            800: '#e4e4e7',
-                            900: '#f4f4f5', // Normally darkest, now lightest
-                            950: '#ffffff'
-                        },
-                        white: '#09090b', // Invert pure white backgrounds
-                        black: '#ffffff'
-                    } : {})
+                    cream: theme.cream,
+                    forest: theme.forest,
+                    lavender: theme.lavender,
+                    charcoal: theme.charcoal,
                 },
                 fontFamily: {
-                    sans: ['var(--theme-font-sans)', 'sans-serif'],
-                    serif: ['var(--theme-font-serif)', 'serif'],
-                },
-                boxShadow: {
-                    'soft': '0 4px 20px -5px rgba(0,0,0,0.1)',
-                    'gold-glow': '0 0 25px var(--theme-gold)',
-                },
-                animation: {
-                    'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    sans: ['Figtree', 'sans-serif'],
+                    serif: ['"EB Garamond"', 'serif'],
                 }
             }
         }
     };
     
-    console.log("Loaded Multiverse Theme:", currentTheme);
+    // ===== GLOBAL ENHANCEMENTS (MAGNETIC BUTTONS & SPA TRANSITIONS) =====
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- 1. Page Transition Animations (SPA feel) ---
+        // Inject the global cream overlay for transitions
+        const overlay = document.createElement('div');
+        overlay.id = 'global-page-transition';
+        overlay.className = 'fixed inset-0 z-[9999] bg-[#FFFFEB] pointer-events-none transition-opacity duration-500 ease-in-out';
+        
+        // If the page has the massive door loader (index.html), don't start opaque
+        const hasDoorLoader = document.getElementById('door-loader');
+        if (hasDoorLoader) {
+            overlay.style.opacity = '0';
+        } else {
+            // On secondary pages, start fully opaque then fade in smoothly
+            overlay.style.opacity = '1';
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    overlay.style.opacity = '0';
+                }, 50); 
+            });
+        }
+        
+        document.body.appendChild(overlay);
+
+        // Intercept internal link clicks to trigger Outro fade
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a');
+            if (!link) return;
+            
+            const href = link.getAttribute('href');
+            const target = link.getAttribute('target');
+            
+            // Skip external links, anchors, or new tabs
+            if (
+                !href || 
+                href.startsWith('http') || 
+                href.startsWith('mailto:') || 
+                href.startsWith('tel:') || 
+                href.startsWith('#') || 
+                target === '_blank'
+            ) {
+                return;
+            }
+            
+            // It's an internal navigation link! Prevent default jump.
+            e.preventDefault();
+            
+            // Trigger fade out
+            overlay.style.pointerEvents = 'auto'; // Block further clicks
+            overlay.style.opacity = '1';
+            
+            // Navigate after fade completes
+            setTimeout(() => {
+                window.location.href = href;
+            }, 500);
+        });
+
+        // --- 2. Magnetic Hover Effects ---
+        const initMagneticButtons = () => {
+            // Give system time to init
+            setTimeout(() => {
+                const magneticElements = document.querySelectorAll('a, button');
+                
+                magneticElements.forEach(el => {
+                    // Ignore elements that already have heavy 3D tilt logic (like student cards)
+                    if (el.closest('.student-card') || el.classList.contains('student-card')) return;
+                    
+                    // Target navbar links or rounded buttons
+                    if (el.closest('nav') || el.classList.contains('rounded-full') || el.closest('#pwa-install-banner') || el.closest('.magnetic')) {
+                        
+                        el.addEventListener('mousemove', (e) => {
+                            const rect = el.getBoundingClientRect();
+                            const x = e.clientX - rect.left - rect.width / 2;
+                            const y = e.clientY - rect.top - rect.height / 2;
+                            
+                            if (typeof gsap !== 'undefined') {
+                                gsap.to(el, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: 'power2.out' });
+                            } else {
+                                el.style.transition = 'none';
+                                el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+                            }
+                        });
+                        
+                        el.addEventListener('mouseleave', () => {
+                            if (typeof gsap !== 'undefined') {
+                                gsap.to(el, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.3)' });
+                            } else {
+                                el.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                                el.style.transform = `translate(0px, 0px)`;
+                            }
+                        });
+                    }
+                });
+            }, 500);
+        };
+
+        // --- 3. Subdued Parallax Scrolling ---
+        const initParallax = () => {
+            const parallaxElements = document.querySelectorAll('[data-parallax]');
+            if (!parallaxElements.length) return;
+            
+            let ticking = false;
+            
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const scrolled = window.scrollY;
+                        parallaxElements.forEach(el => {
+                            const speed = parseFloat(el.getAttribute('data-parallax')) || 0;
+                            // Translates the element up/down smoothly based on scroll distance and speed factor
+                            el.style.transform = `translateY(${scrolled * speed}px)`;
+                        });
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+        };
+
+        // Initialize immediately for elements already on screen
+        initParallax();
+
+        // --- 4. Lenis Smooth Scrolling ---
+        const initLenis = () => {
+            if (typeof Lenis !== 'undefined') {
+                const lenis = new Lenis({
+                    duration: 1.2,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    direction: 'vertical',
+                    gestureDirection: 'vertical',
+                    smooth: true,
+                    mouseMultiplier: 1,
+                    smoothTouch: false,
+                    touchMultiplier: 2,
+                    infinite: false,
+                });
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+            }
+        };
+
+        const loadLenis = () => {
+            if (typeof Lenis === 'undefined') {
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js';
+                script.onload = initLenis;
+                document.head.appendChild(script);
+            } else {
+                initLenis();
+            }
+        };
+        loadLenis();
+
+        // --- 5. Interactive Spotlight Borders ---
+        const initSpotlight = () => {
+            // Apply spotlight CSS
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .student-card {
+                    position: relative;
+                    overflow: hidden;
+                }
+                .student-card::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    border-radius: inherit;
+                    padding: 2px;
+                    background: radial-gradient(
+                        600px circle at var(--mouse-x, 0) var(--mouse-y, 0), 
+                        rgba(240, 215, 255, 0.4), 
+                        transparent 40%
+                    );
+                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    -webkit-mask-composite: xor;
+                    mask-composite: exclude;
+                    pointer-events: none;
+                    z-index: 10;
+                    opacity: 0;
+                    transition: opacity 0.5s ease;
+                }
+                .student-card:hover::before {
+                    opacity: 1;
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Track mouse on cards
+            const trackCards = () => {
+                const cards = document.querySelectorAll('.student-card');
+                cards.forEach(card => {
+                    card.addEventListener('mousemove', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        card.style.setProperty('--mouse-x', `${x}px`);
+                        card.style.setProperty('--mouse-y', `${y}px`);
+                    });
+                });
+            };
+            
+            // Re-run tracking binding if dynamically loaded
+            setTimeout(trackCards, 1000); 
+        };
+        initSpotlight();
+
+        // --- 7. Text Reveal Animations ---
+        const initTextReveal = () => {
+            const headings = document.querySelectorAll('h1, h2, h3');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        if (!target.classList.contains('revealed')) {
+                            target.classList.add('revealed');
+                            if (typeof gsap !== 'undefined') {
+                                const words = target.querySelectorAll('.gsap-word');
+                                if (words.length > 0) {
+                                    gsap.fromTo(words, 
+                                        { opacity: 0, y: 30, rotationX: -20 },
+                                        { opacity: 1, y: 0, rotationX: 0, duration: 1, stagger: 0.05, ease: 'power3.out' }
+                                    );
+                                }
+                            }
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Safely split text nodes while preserving complex structures (like inline SVGs)
+            headings.forEach(h => {
+                if (h.closest('nav') || h.closest('.modal')) return;
+                
+                const walkAndWrap = (node) => {
+                    const children = Array.from(node.childNodes);
+                    children.forEach(child => {
+                        if (child.nodeType === Node.TEXT_NODE && child.textContent.trim().length > 0) {
+                            const words = child.textContent.split(/(\s+)/);
+                            const frag = document.createDocumentFragment();
+                            words.forEach(word => {
+                                if (word.trim().length > 0) {
+                                    const span = document.createElement('span');
+                                    span.className = 'gsap-word inline-block opacity-0';
+                                    span.textContent = word;
+                                    frag.appendChild(span);
+                                } else {
+                                    frag.appendChild(document.createTextNode(word));
+                                }
+                            });
+                            node.replaceChild(frag, child);
+                        } else if (child.nodeType === Node.ELEMENT_NODE && !child.classList.contains('absolute')) {
+                            walkAndWrap(child);
+                        }
+                    });
+                };
+                
+                walkAndWrap(h);
+                observer.observe(h);
+            });
+        };
+
+        // Load GSAP dynamically if missing, then init GSAP dependent functions
+        if (typeof gsap === 'undefined') {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
+            script.onload = () => {
+                initMagneticButtons();
+                initTextReveal();
+            };
+            document.head.appendChild(script);
+        } else {
+            initMagneticButtons();
+            initTextReveal();
+        }
+
+    });
+
 })();
