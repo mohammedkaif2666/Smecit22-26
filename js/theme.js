@@ -211,6 +211,15 @@
             }, 500);
         });
 
+        // Handle Browser Back/Forward (bfcache) Restorations
+        window.addEventListener('pageshow', (e) => {
+            if (e.persisted) {
+                // Instantly remove the cream overlay if loaded from history
+                overlay.style.opacity = '0';
+                overlay.style.pointerEvents = 'none';
+            }
+        });
+
         // --- 2. Magnetic Hover Effects ---
         const initMagneticButtons = () => {
             // Give system time to init
@@ -418,6 +427,109 @@
                 observer.observe(h);
             });
         };
+
+        // --- 8. Ambient Breathing Glow ---
+        const initAmbientGlow = () => {
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes ambientBreathe {
+                    0%, 100% { box-shadow: 0 0 15px 2px rgba(255, 122, 89, 0.3), 0 0 30px 5px rgba(240, 215, 255, 0.15); }
+                    50% { box-shadow: 0 0 25px 5px rgba(255, 122, 89, 0.5), 0 0 45px 10px rgba(240, 215, 255, 0.3); }
+                }
+                .ambient-glow {
+                    animation: ambientBreathe 4s ease-in-out infinite;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Add precisely to prominently mapped primary buttons across the site
+            const addGlows = () => {
+                const primaryBtns = document.querySelectorAll('a[href="admin.html"], a.bg-gold, button.bg-slate-900, a.text-white[href="index.html"]');
+                primaryBtns.forEach(btn => btn.classList.add('ambient-glow'));
+            };
+            addGlows();
+            setTimeout(addGlows, 1000);
+        };
+        initAmbientGlow();
+
+        // --- 9. Reading Progress Silhouette ---
+        const initReadingProgress = () => {
+            const progressBar = document.createElement('div');
+            progressBar.id = 'reading-progress';
+            progressBar.style.cssText = `
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #FF7A59, #c791e8);
+                z-index: 10000; pointer-events: none;
+                transition: width 0.1s ease-out;
+            `;
+            document.body.appendChild(progressBar);
+
+            window.addEventListener('scroll', () => {
+                const totalScroll = document.documentElement.scrollTop;
+                const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                if(windowHeight > 0) {
+                    const scrollPosition = `${(totalScroll / windowHeight) * 100}%`;
+                    progressBar.style.width = scrollPosition;
+                }
+            }, { passive: true });
+        };
+        initReadingProgress();
+
+        // --- 10. Glassmorphism Custom Tooltips ---
+        const initCustomTooltips = () => {
+            const tooltip = document.createElement('div');
+            tooltip.id = 'glass-tooltip';
+            tooltip.style.cssText = `
+                position: fixed; top: 0; left: 0;
+                pointer-events: none; z-index: 10001; opacity: 0;
+                background: rgba(255, 255, 235, 0.85);
+                backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(26, 26, 26, 0.1);
+                padding: 6px 14px; border-radius: 20px;
+                color: #1A1A1A; font-size: 13px; font-weight: 600; font-family: 'Figtree', sans-serif;
+                transform: translate(-50%, -150%);
+                transition: opacity 0.2s ease, transform 0.1s ease-out;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+                white-space: nowrap;
+            `;
+            document.body.appendChild(tooltip);
+
+            const bindTooltip = (el) => {
+                if (el.hasAttribute('data-tooltip-bound')) return;
+                
+                const titleText = el.getAttribute('title') || el.getAttribute('data-hover');
+                if (titleText && titleText.trim() !== '') {
+                    el.setAttribute('data-tooltip', titleText);
+                    el.removeAttribute('title');
+                    el.setAttribute('data-tooltip-bound', 'true');
+
+                    el.addEventListener('mouseenter', (e) => {
+                        tooltip.textContent = el.getAttribute('data-tooltip');
+                        tooltip.style.opacity = '1';
+                        tooltip.style.left = `${e.clientX}px`;
+                        tooltip.style.top = `${e.clientY - 15}px`;
+                    });
+
+                    el.addEventListener('mousemove', (e) => {
+                        tooltip.style.left = `${e.clientX}px`;
+                        tooltip.style.top = `${e.clientY - 15}px`;
+                    });
+
+                    el.addEventListener('mouseleave', () => {
+                        tooltip.style.opacity = '0';
+                    });
+                }
+            };
+
+            const scanForTooltips = () => {
+                document.querySelectorAll('[title], [data-hover]').forEach(bindTooltip);
+            };
+            
+            scanForTooltips();
+            setTimeout(scanForTooltips, 1000); // Re-scan dynamically (for directory cards)
+            setTimeout(scanForTooltips, 3000);
+        };
+        initCustomTooltips();
 
         // Load GSAP dynamically if missing, then init GSAP dependent functions
         if (typeof gsap === 'undefined') {
