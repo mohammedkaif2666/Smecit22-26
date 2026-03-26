@@ -548,7 +548,7 @@
         };
         initCustomTooltips();
 
-        // --- 11. Dynamic Browser Tabs & Exit Intent Modal ---
+        // --- 11. Dynamic Browser Tabs ---
         const initDynamicTabs = () => {
             let originalTitle = document.title;
             window.addEventListener('blur', () => {
@@ -557,63 +557,6 @@
             window.addEventListener('focus', () => {
                 document.title = originalTitle;
             });
-
-            // Modern Exit Intent Custom Popup (Only on Index Page)
-            const isIndexPage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || !window.location.pathname.includes('.html');
-            if (isIndexPage) {
-                let exitIntentTriggered = false;
-                
-                // Inject the custom HTML modal dynamically
-                const exitModal = document.createElement('div');
-                exitModal.id = 'exit-intent-modal';
-                exitModal.className = 'fixed inset-0 z-[10000] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500';
-                exitModal.innerHTML = `
-                    <div class="absolute inset-0 bg-[#0A2A22]/40 backdrop-blur-md"></div>
-                    <div class="relative bg-[#FFFFEB] p-10 rounded-[40px] shadow-2xl border border-gold/30 text-center max-w-sm transform scale-95 transition-transform duration-500" id="exit-modal-box">
-                        <div class="text-6xl mb-4">🥺</div>
-                        <h2 class="text-3xl font-serif font-bold text-[#1A1A1A] mb-3">Leaving so soon?</h2>
-                        <p class="text-[#0A2A22]/70 font-medium mb-8">Do you really want to leave the SMEC IT website?</p>
-                        <div class="flex gap-4 justify-center">
-                            <button id="exit-yes" class="px-6 py-3 bg-red-100/50 text-red-600 hover:bg-red-200 font-bold rounded-full transition-colors">Yes, leave</button>
-                            <button id="exit-no" class="px-6 py-3 bg-[#1A1A1A] text-white hover:bg-gold font-bold rounded-full transition-colors shadow-lg">No, stay!</button>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(exitModal);
-                
-                const box = exitModal.querySelector('#exit-modal-box');
-                const btnYes = exitModal.querySelector('#exit-yes');
-                const btnNo = exitModal.querySelector('#exit-no');
-
-                const showModal = () => {
-                    exitModal.style.opacity = '1';
-                    exitModal.style.pointerEvents = 'auto';
-                    box.style.transform = 'scale(1)';
-                    if (window.UI_SOUNDS) window.UI_SOUNDS.playTick();
-                };
-
-                const hideModal = () => {
-                    exitModal.style.opacity = '0';
-                    exitModal.style.pointerEvents = 'none';
-                    box.style.transform = 'scale(0.95)';
-                };
-
-                // Trigger when mouse rapidly moves to the top browser tab area (Exit intent bounds)
-                document.addEventListener('mouseleave', (e) => {
-                    if (e.clientY < 5 && !exitIntentTriggered) {
-                        exitIntentTriggered = true; // Only show once per session!
-                        showModal();
-                    }
-                });
-
-                btnNo.addEventListener('click', hideModal);
-                
-                // Browsers forcefully prohibit JS from closing windows it didn't open.
-                // If they click 'Yes', we hide the modal and let them naturally close the browser tab.
-                btnYes.addEventListener('click', () => {
-                    hideModal();
-                });
-            }
         };
         initDynamicTabs();
 
