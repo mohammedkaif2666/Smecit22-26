@@ -179,6 +179,7 @@
         document.body.appendChild(overlay);
 
         // Intercept internal link clicks to trigger Outro fade
+        window.isInternalNav = false;
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');
             if (!link) return;
@@ -200,6 +201,9 @@
             
             // It's an internal navigation link! Prevent default jump.
             e.preventDefault();
+            
+            window.isInternalNav = true;
+            if (window.UI_SOUNDS) window.UI_SOUNDS.playWhoosh();
             
             // Trigger fade out
             overlay.style.pointerEvents = 'auto'; // Block further clicks
@@ -285,7 +289,7 @@
         // Initialize immediately for elements already on screen
         initParallax();
 
-        // --- 4. Lenis Smooth Scrolling ---
+        // --- 4. Lenis Smooth Scrolling & Velocity Skew ---
         const initLenis = () => {
             if (typeof Lenis !== 'undefined') {
                 const lenis = new Lenis({
@@ -299,6 +303,19 @@
                     touchMultiplier: 2,
                     infinite: false,
                 });
+
+                // Velocity Skew
+                const skewElements = document.querySelectorAll('.student-card, .card-shadow');
+                if (skewElements.length > 0) {
+                    lenis.on('scroll', (e) => {
+                        const skew = e.velocity * 0.15; 
+                        const clampedSkew = Math.max(-3, Math.min(3, skew));
+                        skewElements.forEach(el => {
+                            el.style.transform = `skewY(${clampedSkew}deg)`;
+                        });
+                    });
+                }
+
                 function raf(time) {
                     lenis.raf(time);
                     requestAnimationFrame(raf);
@@ -530,6 +547,116 @@
             setTimeout(scanForTooltips, 3000);
         };
         initCustomTooltips();
+
+        // --- 11. Dynamic Browser Tabs & Leave Prompt ---
+        const initDynamicTabs = () => {
+            let originalTitle = document.title;
+            window.addEventListener('blur', () => {
+                document.title = "Come back to SMEC IT! 👀";
+            });
+            window.addEventListener('focus', () => {
+                document.title = originalTitle;
+            });
+
+            window.addEventListener('beforeunload', (e) => {
+                if (!window.isInternalNav) {
+                    const msg = "Do u really want to leave ?";
+                    e.preventDefault();
+                    e.returnValue = msg;
+                    return msg;
+                }
+            });
+        };
+        initDynamicTabs();
+
+        // --- 12. Transparent-to-Frosted Navbar ---
+        const initNavbar = () => {
+            const nav = document.querySelector('nav');
+            if (!nav) return;
+            
+            nav.classList.remove('bg-white/80', 'backdrop-blur-md', 'shadow-sm', 'bg-slate-100', 'bg-white/90');
+            nav.classList.add('transition-all', 'duration-500', 'border-b');
+
+            const updateNav = () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-sm', 'border-gold/30');
+                    nav.classList.remove('bg-transparent', 'border-transparent');
+                } else {
+                    nav.classList.add('bg-transparent', 'border-transparent');
+                    nav.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-sm', 'border-gold/30');
+                }
+            };
+            
+            window.addEventListener('scroll', updateNav, { passive: true });
+            updateNav();
+        };
+        initNavbar();
+
+        // --- 13. Subdued UI Sound Design (Web Audio API) ---
+        const initSounds = () => {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const audioCtx = new AudioContext();
+
+            const playTick = () => {
+                if (audioCtx.state === 'suspended') return; 
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.05);
+                
+                gain.gain.setValueAtTime(0, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.015, audioCtx.currentTime + 0.01);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.05);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.05);
+            };
+
+            const playWhoosh = () => {
+                if (audioCtx.state === 'suspended') return;
+                const bufferSize = audioCtx.sampleRate * 0.4; 
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+                
+                const noiseSource = audioCtx.createBufferSource();
+                noiseSource.buffer = buffer;
+                
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(150, audioCtx.currentTime);
+                filter.frequency.linearRampToValueAtTime(600, audioCtx.currentTime + 0.2);
+                
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(0, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.02, audioCtx.currentTime + 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
+                
+                noiseSource.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                noiseSource.start();
+            };
+
+            setTimeout(() => {
+                document.querySelectorAll('a, button, .student-card').forEach(el => {
+                    el.addEventListener('mouseenter', playTick);
+                });
+            }, 1000);
+
+            window.UI_SOUNDS = { playTick, playWhoosh };
+            
+            document.body.addEventListener('click', () => {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+            }, { once: true });
+        };
+        initSounds();
 
         // Load GSAP dynamically if missing, then init GSAP dependent functions
         if (typeof gsap === 'undefined') {
